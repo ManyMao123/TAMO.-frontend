@@ -1,0 +1,35 @@
+<svg width="120" height="70" viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .main {
+      fill: #5e5144;
+      font-family: 'Arial Narrow', sans-serif;
+      font-size: 38px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .sub {
+      fill: #5e5144;
+      font-family: 'Arial Narrow', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .slash-fill {
+      fill: #5e5144;
+    }
+  </style>
+
+  <text x="0" y="40" class="main">TAMO</text>
+  <text x="0" y="58" class="sub">ONLINE STORE</text>
+  
+  <!-- <line x1="125" y1="17" x2="110" y2="58" class="slash"/> -->
+  <polygon
+  points="
+    105,15    
+   90,58.5     
+    93.8,58.5 
+    108.8,15 
+  "
+    class="slash-fill"
+  />
+</svg>
