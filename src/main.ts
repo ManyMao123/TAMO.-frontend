@@ -2,6 +2,14 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import router from './router'
+
+// 引入Bootstrap
+import { createBootstrap } from 'bootstrap-vue-next'
+
+// 引入Bootstrap CSS
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
+import './assets/customBootstrap.scss'
+
 // 引入全局樣式文件
 import './assets/variables.css'
 
@@ -10,6 +18,8 @@ import BaseButton from './components/BaseButton.vue'
 import BaseDialog from './components/BaseDialog.vue'
 
 const app = createApp(App)
+
+app.use(createBootstrap())
 
 // 全局註冊部分組件
 app.component('BaseButton', BaseButton)
