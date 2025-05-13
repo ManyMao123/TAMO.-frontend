@@ -2,6 +2,7 @@
 import Header from '@/layouts/Header.vue'
 import Footer from '@/layouts/Footer.vue'
 import FabPanel from '@/layouts/FabPanel.vue'
+import BaseBreadCrumb from '@/components/BaseBreadCrumb.vue'
 
 withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
 </script>

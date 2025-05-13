@@ -1,0 +1,148 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import model1 from '@/assets/images/model1.webp'
+import model5 from '@/assets/images/model5.webp'
+import model6 from '@/assets/images/model6.webp'
+import cloth1 from '@/assets/images/cloth1.webp'
+import cloth2 from '@/assets/images/cloth2.webp'
+import productImages from '@/assets/images/products'
+
+import BaseCarousel from '@/components/BaseCarousel.vue'
+import SectionBlock from '@/views/homepage/components/SectionBlock.vue'
+
+const mainSlides = [
+  { image: model1, title: '模特1' },
+  { image: cloth1, title: '衣服1' },
+  { image: model5, title: '模特5' },
+  { image: cloth2, title: '衣服2' },
+  { image: model6, title: '模特6' }
+]
+
+const newClothSlides = productImages.map((img, index) => ({
+  image: img,
+  title: `圖片 ${index + 1}`
+}))
+</script>
+
+<template>
+  <div class="flex flex-col items-center flex-1 gap-8">
+    <div class="img-container">
+      <img src="" />
+    </div>
+
+    <!-- 首頁大幻燈片 -->
+    <BaseCarousel :slides="mainSlides"></BaseCarousel>
+
+    <!-- 下單提醒 -->
+    <p class="order-rule">下午1點前下單，訂單將於當日出貨 <span>( ※ 部分商品不適用 )</span>。</p>
+
+    <!-- 活動網頁 -->
+    <div class="img-container w-[600px]">
+      <img src="../../assets/images/fair.webp" />
+    </div>
+
+    <SectionBlock :title="'推薦關鍵字搜尋'" :subTitle="'HOT KEYWORDS'">
+      <div class="category-container">
+        <!-- 圖片+文字 -->
+        <img
+          src="../../assets/images/products/4222509_base.webp"
+          alt="外套"
+          class="category-container__image"
+        />
+        <p>外套</p>
+      </div>
+      <div class="category-container">
+        <!-- 圖片+文字 -->
+        <img
+          src="../../assets/images/products/4249137_base.webp"
+          alt="上衣"
+          class="category-container__image"
+        />
+        <p>上衣</p>
+      </div>
+      <div class="category-container">
+        <!-- 圖片+文字 -->
+        <img
+          src="../../assets/images/products/4167142_base.webp"
+          alt="襯衫"
+          class="category-container__image"
+        />
+        <p>襯衫</p>
+      </div>
+      <div class="category-container">
+        <!-- 圖片+文字 -->
+        <img
+          src="../../assets/images/products/4248752_base.webp"
+          alt="牛仔單品"
+          class="category-container__image"
+        />
+        <p>牛仔單品</p>
+      </div>
+    </SectionBlock>
+
+    <SectionBlock :title="'最新商品'" :subTitle="'NEW ITEM'">
+      <BaseCarousel
+        :slides="newClothSlides"
+        :slides-per-view="4"
+        :height="400"
+        :enable-pagination="false"
+        :spaceBetween="4"
+      ></BaseCarousel>
+    </SectionBlock>
+
+    <SectionBlock :title="'熱銷排行'" :subTitle="'ITEM RANKING'">
+      <BaseCarousel
+        :slides="newClothSlides"
+        :slides-per-view="4"
+        :height="400"
+        :enable-pagination="false"
+        :spaceBetween="4"
+      ></BaseCarousel>
+    </SectionBlock>
+
+    <SectionBlock :title="'選品搜尋'" :subTitle="'SELECT BRAND'"> </SectionBlock>
+
+    <SectionBlock :title="'推薦商品'" :subTitle="'RECOMMEND ITEM'"> </SectionBlock>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.order-rule {
+  font-size: 0.875rem;
+  border-top: 1px solid var(--light-gray);
+  border-bottom: 1px solid var(--light-gray);
+  padding-block: var(--space-md);
+
+  span {
+    font-size: 0.75rem;
+  }
+}
+.category-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+
+  &__image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover; /* 保持圖片比例裁切 */
+    border-radius: 50%; /* 核心：變成圓形 */
+    overflow: hidden;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0);
+    transition: background 0.2s ease;
+  }
+
+  &:hover::after {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+</style>
