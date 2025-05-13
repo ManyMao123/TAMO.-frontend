@@ -9,7 +9,6 @@ interface fabPanelItem {
 const fabPanelList: fabPanelItem[] = [
   { icon: 'cart', text: '購物車' },
   { icon: 'heart', text: '喜愛清單' },
-  { icon: 'store', text: '商店' },
   { icon: 'search', text: '搜尋' },
   { icon: 'bars', text: '菜單' }
 ]
@@ -34,6 +33,7 @@ const fabPanelList: fabPanelItem[] = [
   bottom: 0;
   color: var(--white);
   background-color: var(--primary-color);
+  z-index: 10000;
 
   .fabPanel__item {
     padding-inline: var(--space-md);

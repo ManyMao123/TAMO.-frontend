@@ -50,6 +50,10 @@ const categorySelectedIndex: Ref<null | number> = ref(null)
 </template>
 
 <style scoped lang="scss">
+header {
+  border-bottom: 1px solid #e5e5e5;
+}
+
 .header-container {
   width: 100%;
   display: flex;
@@ -86,7 +90,7 @@ const categorySelectedIndex: Ref<null | number> = ref(null)
 }
 
 .category-container {
-  margin-inline: var(--space-2xl);
+  margin-inline: var(--space-8xl);
 
   .category-list {
     height: 70px;
@@ -98,7 +102,10 @@ const categorySelectedIndex: Ref<null | number> = ref(null)
     padding-inline: var(--space-lg);
     cursor: pointer;
     letter-spacing: 2px;
-    text-align: center;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &.selected {
       background-color: var(--secondary-color);
