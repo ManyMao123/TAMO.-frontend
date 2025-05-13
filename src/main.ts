@@ -17,6 +17,10 @@ import './assets/variables.css'
 import BaseButton from './components/BaseButton.vue'
 import BaseDialog from './components/BaseDialog.vue'
 
+// 引入swiper-element
+import { register } from 'swiper/element/bundle'
+register()
+
 const app = createApp(App)
 
 app.use(createBootstrap())
