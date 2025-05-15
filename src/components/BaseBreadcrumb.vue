@@ -8,16 +8,16 @@ withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
     <BBreadcrumbItem href="#home">
       <Icon icon="flowbite:home-solid" width="16" height="16" />
     </BBreadcrumbItem>
-    <BBreadcrumbItem href="#foo">商店一覽</BBreadcrumbItem>
-    <BBreadcrumbItem active>TAMO</BBreadcrumbItem>
+    <BBreadcrumbItem href="#foo">分類</BBreadcrumbItem>
+    <BBreadcrumbItem active>上衣ABC</BBreadcrumbItem>
     <!-- <template #append><span class="mx-2">append text</span></template> -->
   </BBreadcrumb>
 </template>
 
 <style scoped lang="scss">
 .breadcrumb-container {
-  margin-inline: var(--space-8xl);
-  margin-block: var(--space-lg);
+  // margin-inline: var(--space-8xl);
+  // margin-block: var(--space-lg);
 
   :deep(ol.breadcrumb) {
     margin: auto;
