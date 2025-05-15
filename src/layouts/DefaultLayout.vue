@@ -12,7 +12,7 @@ withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
     <Header></Header>
 
     <!-- 畫面 -->
-    <main class="layout-container__main flex-1 flex items-center justify-center py-10 px-20">
+    <main class="layout-container__main flex-1 flex items-center justify-center py-10">
       <slot></slot>
     </main>
 

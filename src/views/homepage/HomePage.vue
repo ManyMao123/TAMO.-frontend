@@ -9,29 +9,51 @@ import productImages from '@/assets/images/products'
 
 import BaseCarousel from '@/components/BaseCarousel.vue'
 import SectionBlock from '@/views/homepage/components/SectionBlock.vue'
+// import type { Product } from '@/types/models/product'
 
 const mainSlides = [
   { image: model1, title: '模特1' },
   { image: cloth1, title: '衣服1' },
   { image: model5, title: '模特5' },
   { image: cloth2, title: '衣服2' },
-  { image: model6, title: '模特6' }
-]
+  { image: model6, title: '模特6' },
+  { image: model1, title: '模特1-測試輪播' },
+  { image: cloth1, title: '衣服1-測試輪播' },
+  { image: model5, title: '模特5-測試輪播' },
+  { image: cloth2, title: '衣服2-測試輪播' },
+  { image: model6, title: '模特6-測試輪播' },
+  { image: model5, title: '模特5-測試輪播' }
+].map(item => ({
+  ...item,
+  onlyImg: true
+}))
 
 const newClothSlides = productImages.map((img, index) => ({
   image: img,
-  title: `圖片 ${index + 1}`
+  title: `圖片 ${index + 1}`,
+  onlyImg: false,
+  product: {
+    id: 1,
+    name: '棉質巴里紗細褶罩衫',
+    price: 1500,
+    inStock: true,
+    img: img
+  }
 }))
 </script>
 
 <template>
-  <div class="flex flex-col items-center flex-1 gap-8">
-    <div class="img-container">
-      <img src="" />
-    </div>
-
+  <div class="flex flex-col items-center flex-1 gap-8 overflow-hidden">
     <!-- 首頁大幻燈片 -->
-    <BaseCarousel :slides="mainSlides"></BaseCarousel>
+    <BaseCarousel
+      :slides="mainSlides"
+      :slides-per-view="5"
+      :enable-autoplay="true"
+      :width="3100"
+      :height="780"
+      :space-between="20"
+      :centered-slides="true"
+    ></BaseCarousel>
 
     <!-- 下單提醒 -->
     <p class="order-rule">下午1點前下單，訂單將於當日出貨 <span>( ※ 部分商品不適用 )</span>。</p>
@@ -84,7 +106,8 @@ const newClothSlides = productImages.map((img, index) => ({
       <BaseCarousel
         :slides="newClothSlides"
         :slides-per-view="4"
-        :height="400"
+        :slides-per-group="4"
+        :height="420"
         :enable-pagination="false"
         :spaceBetween="4"
       ></BaseCarousel>
@@ -94,7 +117,8 @@ const newClothSlides = productImages.map((img, index) => ({
       <BaseCarousel
         :slides="newClothSlides"
         :slides-per-view="4"
-        :height="400"
+        :slides-per-group="4"
+        :height="420"
         :enable-pagination="false"
         :spaceBetween="4"
       ></BaseCarousel>
