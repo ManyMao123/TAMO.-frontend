@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Product } from '@/types/models/product'
 import numeral from 'numeral'
-import productSample from '@/assets/images/products/4167142_base.webp'
+import productSample from '@/assets/images/products/P4167/4167142_yellow.webp'
 
 withDefaults(defineProps<{ product: Product | null }>(), {
   product: () => ({
