@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import ProductCard from '@/components/ProductCard.vue'
 import type { Product } from '@/types/models/product'
 
 // 幻燈片物件型別
 type Slide = {
   image: string
   title: string
-  onlyImg: boolean
-  product?: Product
-}
+  product?: Product | null
+} & Record<string, unknown>
 
 const props = withDefaults(
   defineProps<{
@@ -23,30 +21,24 @@ const props = withDefaults(
     spaceBetween?: number
     centeredSlides?: boolean
     navigation?: boolean
+    rows?: number
   }>(),
   {
     slides: () => [
       {
         image: '',
         title: '幻燈片',
-        onlyImg: true,
-        product: {
-          id: 1,
-          name: '棉質巴里紗細褶罩衫',
-          price: 1500,
-          inStock: true,
-          img: ''
-        }
+        product: null
       }
     ],
     slidesPerView: 3,
     slidesPerGroup: 1,
-    width: 1200,
     height: 650,
     enablePagination: true,
     enableAutoplay: false,
     spaceBetween: 10,
-    centeredSlides: false
+    centeredSlides: false,
+    rows: 1
   }
 )
 
@@ -103,6 +95,7 @@ const slideNext = () => {
     :space-between="spaceBetween"
     :centered-slides="centeredSlides"
     :pagination="paginationOption"
+    :grid="{ rows: rows, fill: 'row' }"
     :navigation="{
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev'
@@ -114,12 +107,16 @@ const slideNext = () => {
       }
     }"
     @slidechange="onSlideChange"
-    style="padding: 0"
-    :style="{ height: `${height}px`, width: `${width}px` }"
+    style="padding: 0; width: 100%; height: 100%"
+    :style="{ minWidth: `${width}px`, maxWidth: `${width}px` }"
   >
     <swiper-slide v-for="(item, index) in slides" :key="index">
-      <img v-if="item.onlyImg" :src="item.image" :alt="item.title" />
-      <ProductCard v-else :product="item.product || null"></ProductCard>
+      <!-- <img :src="item.image" :alt="item.title" /> -->
+      <!-- <ProductCard v-else :product="item.product || null"></ProductCard> -->
+      <slot :item="item" :index="index">
+        <!-- fallback 預設插槽：顯示圖片 -->
+        <img :src="item.image" :alt="item.title" />
+      </slot>
     </swiper-slide>
   </swiper-container>
 
