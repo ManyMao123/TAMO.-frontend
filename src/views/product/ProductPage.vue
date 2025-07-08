@@ -13,7 +13,8 @@ import BaseCollapse from '@/components/BaseCollapse.vue'
 const typeMap = new Map<string, { type: string; id: string; img: string[] }>()
 
 productImages.forEach(path => {
-  const match = path.match(/_(\w+)\.(jpg|jpeg|png|webp)$/i)
+  const cleanedPath = path.split('?')[0]
+  const match = cleanedPath.match(/_(\w+)\.(jpe?g|png|webp)$/i)
   const type = match?.[1]
   if (!type) return
 
