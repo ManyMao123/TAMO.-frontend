@@ -11,7 +11,7 @@ withDefaults(defineProps<{ title?: string; subTitle?: string }>(), {
     <p class="title__main">{{ title }}</p>
     <p class="title__sub">- {{ subTitle }} -</p>
 
-    <div class="flex gap-8 p-6">
+    <div class="flex gap-8 p-6 w-full">
       <slot></slot>
     </div>
   </div>
@@ -23,8 +23,8 @@ withDefaults(defineProps<{ title?: string; subTitle?: string }>(), {
   flex-direction: column;
   align-items: center;
   gap: var(--space-sm);
-  // margin-top: var(--space-xl);
   margin-block: var(--space-xl) var(--space-xl);
+  max-width: 1200px;
 
   .title__main {
     font-weight: bold;
