@@ -1,0 +1,22 @@
+<svg width="120" height="70" viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .main {
+      fill: #fff;
+      font-family: 'Unica One', sans-serif;
+      font-size: 26px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .sub {
+      fill: #fff;
+      font-family: 'Unica One', sans-serif;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+  </style>
+
+  <text x="0" y="40" class="main">TAMO</text>
+  <text x="0" y="58" class="sub">TAMO CO.,Ltd</text>
+  
+</svg>
