@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "name": "衣服A",
+    "color": "yellow,white,navy",
+    "imgs": [
+      {
+        "id": 1,
+        "item_id": 1,
+        "path": "/img1.jpg",
+        "color": "yellow"
+      },
+      {
+        "id": 2,
+        "item_id": 1,
+        "path": "/img2.jpg",
+        "color": "白色"
+      }
+    ]
+  }
+]

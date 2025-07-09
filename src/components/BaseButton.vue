@@ -1,16 +1,16 @@
 <script setup lang="ts">
-withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
+import { computed } from 'vue'
 
-const a = 1
-const b = 2
-defineExpose({
-  a,
-  b
+const props = withDefaults(defineProps<{ text?: string; width?: string | number }>(), {
+  text: 'Button',
+  width: 120
 })
+
+const customWidth = computed(() => props.width + 'px')
 </script>
 
 <template>
-  <div class="button">
+  <div class="button" :style="{ maxWidth: customWidth }">
     <p class="button__label">
       <slot>{{ text }}</slot>
     </p>
@@ -24,8 +24,9 @@ defineExpose({
   border-radius: var(--border-radius);
   padding: var(--space-xs);
   background-color: var(--primary-color);
+  width: 100%;
   min-width: 100px;
-  max-width: 120px;
+  // max-width: v-bind(customWidth);
 
   &:hover {
     filter: brightness(0.9);

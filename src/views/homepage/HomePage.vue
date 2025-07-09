@@ -8,6 +8,7 @@ import cloth2 from '@/assets/images/cloth2.webp'
 import productImages from '@/assets/images/products'
 
 import BaseCarousel from '@/components/BaseCarousel.vue'
+import ProductCard from '@/components/ProductCard.vue'
 import SectionBlock from '@/views/homepage/components/SectionBlock.vue'
 // import type { Product } from '@/types/models/product'
 
@@ -23,15 +24,11 @@ const mainSlides = [
   { image: cloth2, title: '衣服2-測試輪播' },
   { image: model6, title: '模特6-測試輪播' },
   { image: model5, title: '模特5-測試輪播' }
-].map(item => ({
-  ...item,
-  onlyImg: true
-}))
+]
 
 const newClothSlides = productImages.map((img, index) => ({
   image: img,
   title: `圖片 ${index + 1}`,
-  onlyImg: false,
   product: {
     id: 1,
     name: '棉質巴里紗細褶罩衫',
@@ -110,7 +107,11 @@ const newClothSlides = productImages.map((img, index) => ({
         :height="420"
         :enable-pagination="false"
         :spaceBetween="4"
-      ></BaseCarousel>
+      >
+        <template #default="{ item }">
+          <ProductCard :product="item.product || null" />
+        </template>
+      </BaseCarousel>
     </SectionBlock>
 
     <SectionBlock :title="'熱銷排行'" :subTitle="'ITEM RANKING'">
@@ -121,7 +122,11 @@ const newClothSlides = productImages.map((img, index) => ({
         :height="420"
         :enable-pagination="false"
         :spaceBetween="4"
-      ></BaseCarousel>
+      >
+        <template #default="{ item }">
+          <ProductCard :product="item.product || null" />
+        </template>
+      </BaseCarousel>
     </SectionBlock>
 
     <SectionBlock :title="'選品搜尋'" :subTitle="'SELECT BRAND'"> </SectionBlock>
