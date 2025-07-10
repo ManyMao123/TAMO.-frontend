@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 import model1 from '@/assets/images/model1.webp'
 import model5 from '@/assets/images/model5.webp'
 import model6 from '@/assets/images/model6.webp'
@@ -37,16 +38,30 @@ const newClothSlides = productImages.map((img, index) => ({
     img: img
   }
 }))
+
+// 取得目前視窗寬高
+const { width } = useWindowSize()
+
+// 主幻燈片設定
+const mainSliderWidth = computed(() => (width.value >= 1280 ? '3100px' : '100%'))
+const mainSlidesPerView = computed(() => (width.value >= 1280 ? 5 : 1))
+
+// 商品幻燈片設定
+const productSlidesPerView = computed(() => {
+  if (width.value >= 1280) return 4
+  else if (width.value >= 768) return 3
+  else return 1
+})
 </script>
 
 <template>
-  <div class="flex flex-col items-center flex-1 gap-8 overflow-hidden">
+  <div class="flex flex-col items-center flex-1 lg:gap-8 gap-6 overflow-hidden">
     <!-- 首頁大幻燈片 -->
     <BaseCarousel
       :slides="mainSlides"
-      :slides-per-view="5"
+      :slides-per-view="mainSlidesPerView"
       :enable-autoplay="true"
-      :width="3100"
+      :width="mainSliderWidth"
       :height="780"
       :space-between="20"
       :centered-slides="true"
@@ -56,54 +71,56 @@ const newClothSlides = productImages.map((img, index) => ({
     <p class="order-rule">下午1點前下單，訂單將於當日出貨 <span>( ※ 部分商品不適用 )</span>。</p>
 
     <!-- 活動網頁 -->
-    <div class="img-container w-[600px]">
+    <div class="img-container w-[400px] md:w-[600px]">
       <img src="../../assets/images/fair.webp" />
     </div>
 
     <SectionBlock :title="'推薦關鍵字搜尋'" :subTitle="'HOT KEYWORDS'">
-      <div class="category-container">
-        <!-- 圖片+文字 -->
-        <img
-          src="../../assets/images/products/4222509_base.webp"
-          alt="外套"
-          class="category-container__image"
-        />
-        <p>外套</p>
-      </div>
-      <div class="category-container">
-        <!-- 圖片+文字 -->
-        <img
-          src="../../assets/images/products/4249137_base.webp"
-          alt="上衣"
-          class="category-container__image"
-        />
-        <p>上衣</p>
-      </div>
-      <div class="category-container">
-        <!-- 圖片+文字 -->
-        <img
-          src="../../assets/images/products/4167142_base.webp"
-          alt="襯衫"
-          class="category-container__image"
-        />
-        <p>襯衫</p>
-      </div>
-      <div class="category-container">
-        <!-- 圖片+文字 -->
-        <img
-          src="../../assets/images/products/4248752_base.webp"
-          alt="牛仔單品"
-          class="category-container__image"
-        />
-        <p>牛仔單品</p>
+      <div class="grid grid-cols-2 md:flex gap-8">
+        <div class="category-container">
+          <!-- 圖片+文字 -->
+          <img
+            src="../../assets/images/products/4222509_base.webp"
+            alt="外套"
+            class="category-container__image"
+          />
+          <p>外套</p>
+        </div>
+        <div class="category-container">
+          <!-- 圖片+文字 -->
+          <img
+            src="../../assets/images/products/4249137_base.webp"
+            alt="上衣"
+            class="category-container__image"
+          />
+          <p>上衣</p>
+        </div>
+        <div class="category-container">
+          <!-- 圖片+文字 -->
+          <img
+            src="../../assets/images/products/4167142_base.webp"
+            alt="襯衫"
+            class="category-container__image"
+          />
+          <p>襯衫</p>
+        </div>
+        <div class="category-container">
+          <!-- 圖片+文字 -->
+          <img
+            src="../../assets/images/products/4248752_base.webp"
+            alt="牛仔單品"
+            class="category-container__image"
+          />
+          <p>牛仔單品</p>
+        </div>
       </div>
     </SectionBlock>
 
     <SectionBlock :title="'最新商品'" :subTitle="'NEW ITEM'">
       <BaseCarousel
         :slides="newClothSlides"
-        :slides-per-view="4"
-        :slides-per-group="4"
+        :slides-per-view="productSlidesPerView"
+        :slides-per-group="productSlidesPerView"
         :height="420"
         :enable-pagination="false"
         :spaceBetween="4"
@@ -117,8 +134,8 @@ const newClothSlides = productImages.map((img, index) => ({
     <SectionBlock :title="'熱銷排行'" :subTitle="'ITEM RANKING'">
       <BaseCarousel
         :slides="newClothSlides"
-        :slides-per-view="4"
-        :slides-per-group="4"
+        :slides-per-view="productSlidesPerView"
+        :slides-per-group="productSlidesPerView"
         :height="420"
         :enable-pagination="false"
         :spaceBetween="4"
@@ -157,9 +174,14 @@ const newClothSlides = productImages.map((img, index) => ({
   &__image {
     width: 120px;
     height: 120px;
-    object-fit: cover; /* 保持圖片比例裁切 */
-    border-radius: 50%; /* 核心：變成圓形 */
+    object-fit: cover;
+    border-radius: 50%;
     overflow: hidden;
+
+    @media (width> 768px) {
+      width: 120px;
+      height: 120px;
+    }
   }
 
   &::after {

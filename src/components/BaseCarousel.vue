@@ -14,7 +14,7 @@ const props = withDefaults(
     slides: Slide[]
     slidesPerView?: number
     slidesPerGroup?: number
-    width?: number
+    width?: string
     height?: number
     enablePagination?: boolean
     enableAutoplay?: boolean
@@ -108,7 +108,7 @@ const slideNext = () => {
     }"
     @slidechange="onSlideChange"
     style="padding: 0; width: 100%; height: 100%"
-    :style="{ minWidth: `${width}px`, maxWidth: `${width}px` }"
+    :style="{ minWidth: width, maxWidth: width }"
   >
     <swiper-slide v-for="(item, index) in slides" :key="index">
       <!-- <img :src="item.image" :alt="item.title" /> -->
