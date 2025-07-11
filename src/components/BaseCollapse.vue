@@ -2,10 +2,14 @@
 import { Icon } from '@iconify/vue'
 import { ref } from 'vue'
 
-const props = withDefaults(defineProps<{ title?: string; defaultExpanded?: boolean }>(), {
-  title: '標題1',
-  defaultExpanded: false
-})
+const props = withDefaults(
+  defineProps<{ title?: string; defaultExpanded?: boolean; preview?: boolean }>(),
+  {
+    title: '標題1',
+    defaultExpanded: false,
+    preview: false
+  }
+)
 
 const isExpanded = ref(props.defaultExpanded)
 </script>
@@ -28,6 +32,7 @@ const isExpanded = ref(props.defaultExpanded)
       id="panel-content"
       aria-labelledby="panel-title"
       :aria-hidden="!isExpanded"
+      :class="{ 'preview-mode': preview }"
     >
       <div class="slot-wrapper">
         <slot></slot>
@@ -54,6 +59,16 @@ const isExpanded = ref(props.defaultExpanded)
   span {
     font-size: 0.875rem;
     font-weight: 700;
+  }
+}
+
+.preview-mode[aria-hidden='true'] {
+  mask: linear-gradient(to bottom, #000 10%, transparent 100%);
+  grid-template-rows: 1fr;
+  padding-bottom: var(--space-md);
+
+  .slot-wrapper {
+    height: 6em;
   }
 }
 

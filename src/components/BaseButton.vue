@@ -20,20 +20,20 @@ const customWidth = computed(() => props.width + 'px')
 <style scoped lang="scss">
 .button {
   cursor: pointer;
-  // border: 1px solid var(--white);
   border-radius: var(--border-radius);
   padding: var(--space-xs);
   background-color: var(--primary-color);
   width: 100%;
   min-width: 100px;
   // max-width: v-bind(customWidth);
+  transition: background-color 0.2s ease;
 
   &:hover {
-    filter: brightness(0.9);
+    background-color: var(--primary-hover);
   }
 
   &:active {
-    filter: brightness(0.8);
+    background-color: var(--primary-hover);
   }
 }
 
