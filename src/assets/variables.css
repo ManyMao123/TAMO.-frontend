@@ -1,11 +1,12 @@
 :root {
-  --primary-color: #da7382;
+  --primary-color: #b89a73;
+  --primary-hover: #d2b48c;
   --secondary-color: #5e5144;
-  --accent-color: #e74c3c;
+  --accent-color: #bf0010;
   --white: #fff;
   --light-gray: #dcdcdc;
   --light-brown: #a89e91;
-  --border-radius: 0.5rem;
+  --border-radius: 4px;
   --space-xs: 0.25rem; /* 4px */
   --space-sm: 0.5rem; /* 8px */
   --space-md: 1rem; /* 16px */

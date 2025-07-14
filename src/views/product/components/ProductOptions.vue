@@ -6,13 +6,13 @@ withDefaults(defineProps<{ img?: string; text?: string }>(), { img: '', text: ''
 <template>
   <div class="option-container">
     <div class="flex justify-between w-full">
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-4 w-full">
         <img class="h-[66px]" :src="img" alt="" />
         <span>one／ 有庫存</span>
       </div>
 
-      <div class="flex items-center gap-4 w-full max-w-[230px]">
-        <BaseButton :width="160">加入購物車</BaseButton>
+      <div class="flex items-center justify-end gap-4 w-full">
+        <BaseButton :width="189">加入購物車</BaseButton>
         <div class="btn__favorite">
           <Icon :icon="`material-symbols:heart-plus-outline-rounded`" width="24" height="24" />
         </div>
@@ -37,5 +37,9 @@ withDefaults(defineProps<{ img?: string; text?: string }>(), { img: '', text: ''
   border-radius: 50%;
   background: var(--light-gray);
   cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.05);
+  }
 }
 </style>
