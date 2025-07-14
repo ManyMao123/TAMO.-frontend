@@ -17,8 +17,8 @@ const fabPanelList: fabPanelItem[] = [
 <template>
   <div class="fabPanel">
     <ul class="fabPanel__list flex">
-      <li class="fabPanel__item" v-for="(item, index) in fabPanelList" :key="index">
-        <Icon :icon="`flowbite:${item.icon}-outline`" width="40" height="40" />
+      <li class="fabPanel__item gap-1" v-for="(item, index) in fabPanelList" :key="index">
+        <Icon :icon="`flowbite:${item.icon}-outline`" width="36" height="36" />
         <span>{{ item.text }}</span>
       </li>
     </ul>
@@ -27,7 +27,7 @@ const fabPanelList: fabPanelItem[] = [
 
 <style scoped lang="scss">
 .fabPanel {
-  width: 500px;
+  width: 420px;
   position: fixed;
   right: 0;
   bottom: 0;
@@ -38,13 +38,18 @@ const fabPanelList: fabPanelItem[] = [
   .fabPanel__item {
     padding-inline: var(--space-md);
     // padding-block: var(--space-md);
-    height: 100px;
+    height: 86px;
     flex: 1 1 0;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     cursor: pointer;
+
+    span {
+      font-size: 0.875rem;
+    }
+
     &:hover {
       filter: brightness(0.75);
     }
