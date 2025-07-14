@@ -32,7 +32,7 @@ const fabPanelList: fabPanelItem[] = [
   right: 0;
   bottom: 0;
   color: var(--white);
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color);
   z-index: 10000;
 
   .fabPanel__item {
@@ -51,7 +51,11 @@ const fabPanelList: fabPanelItem[] = [
     }
 
     &:hover {
-      filter: brightness(0.75);
+      background-color: var(--secondary-hover);
+    }
+
+    &:active {
+      background-color: var(--secondary-active);
     }
   }
 }
