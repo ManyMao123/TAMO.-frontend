@@ -2,6 +2,7 @@
 import type { Product } from '@/types/models/product'
 import numeral from 'numeral'
 import productSample from '@/assets/images/products/P4167/4167142_yellow.webp'
+import { useRouter } from 'vue-router'
 
 withDefaults(defineProps<{ product: Product | null }>(), {
   product: () => ({
@@ -14,10 +15,16 @@ withDefaults(defineProps<{ product: Product | null }>(), {
     categoryId: '1'
   })
 })
+
+const router = useRouter()
+
+function handleClick() {
+  router.push({ name: 'ProductPage', params: { id: '1' } })
+}
 </script>
 
 <template>
-  <div class="product-card flex flex-col">
+  <div class="product-card flex flex-col" @click="handleClick">
     <img class="product-card__image" :src="product?.img" />
     <div class="product-card__detail">
       <p>{{ product?.name || '' }}</p>
