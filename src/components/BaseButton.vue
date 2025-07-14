@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const props = withDefaults(defineProps<{ text?: string; width?: string | number }>(), {
-  text: 'Button',
-  width: 120
-})
+const props = withDefaults(
+  defineProps<{ text?: string; width?: string | number; plain?: boolean }>(),
+  {
+    text: 'Button',
+    width: 120,
+    plain: false
+  }
+)
 
 const customWidth = computed(() => props.width + 'px')
 </script>
 
 <template>
-  <div class="button" :style="{ maxWidth: customWidth }">
+  <div class="button" :style="{ maxWidth: customWidth }" :class="{ 'is-plain': plain }">
     <p class="button__label">
       <slot>{{ text }}</slot>
     </p>
@@ -25,13 +29,10 @@ const customWidth = computed(() => props.width + 'px')
   background-color: var(--primary-color);
   width: 100%;
   min-width: 100px;
-  // max-width: v-bind(customWidth);
+  box-sizing: border-box;
   transition: background-color 0.2s ease;
 
-  &:hover {
-    background-color: var(--primary-hover);
-  }
-
+  &:hover,
   &:active {
     background-color: var(--primary-hover);
   }
@@ -43,5 +44,25 @@ const customWidth = computed(() => props.width + 'px')
   margin-inline: var(--space-sm);
   font-size: 1rem;
   text-align: center;
+  white-space: nowrap;
+}
+
+.button.is-plain {
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+
+  &:hover,
+  &:active {
+    background-color: var(--primary-color);
+  }
+
+  &:hover .button__label,
+  &:active .button__label {
+    color: var(--white);
+  }
+
+  .button__label {
+    color: var(--primary-color);
+  }
 }
 </style>
