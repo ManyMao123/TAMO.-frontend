@@ -5,7 +5,6 @@ const props = withDefaults(
   defineProps<{ text?: string; width?: string | number; plain?: boolean }>(),
   {
     text: 'Button',
-    width: 120,
     plain: false
   }
 )
@@ -32,9 +31,12 @@ const customWidth = computed(() => props.width + 'px')
   box-sizing: border-box;
   transition: background-color 0.2s ease;
 
-  &:hover,
-  &:active {
+  &:hover {
     background-color: var(--primary-hover);
+  }
+
+  &:active {
+    background-color: var(--primary-active);
   }
 }
 
@@ -51,9 +53,12 @@ const customWidth = computed(() => props.width + 'px')
   background-color: transparent;
   border: 1px solid var(--primary-color);
 
-  &:hover,
-  &:active {
+  &:hover {
     background-color: var(--primary-color);
+  }
+
+  &:active {
+    background-color: var(--primary-active);
   }
 
   &:hover .button__label,
