@@ -11,6 +11,13 @@ import BaseCollapse from '@/components/BaseCollapse.vue'
 import BaseButton from '@/components/BaseButton.vue'
 // import type { Product } from '@/types/models/product'
 
+const breadcrumbs = [
+  { label: 'ホーム', href: '/', icon: 'flowbite:home-solid' },
+  { label: 'トップス', href: '/tops' },
+  { label: 'シャツ・ブラウス', href: '/tops/shirts' },
+  { label: '2WAYコンパクトレースブラウス' }
+]
+
 const typeMap = new Map<string, { type: string; id: string; img: string[] }>()
 
 productImages.forEach(path => {
@@ -57,7 +64,7 @@ function showNextImage() {
 <template>
   <div class="flex flex-col gap-8 mx-auto max-w-[1300px]">
     <!-- 麵包屑 -->
-    <BaseBreadCrumb class=""></BaseBreadCrumb>
+    <BaseBreadCrumb :breadcrumbs="breadcrumbs"></BaseBreadCrumb>
 
     <div class="grid grid-cols-2 gap-20">
       <div class="flex flex-col gap-10">
