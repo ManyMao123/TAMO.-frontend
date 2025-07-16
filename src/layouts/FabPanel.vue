@@ -27,7 +27,7 @@ const { start: startHideTimer, stop: stopHideTimer } = useTimeoutFn(() => {
   isListVisible.value = false
 }, 500)
 
-const isDesktop = useMediaQuery('(min-width: 769px)')
+const isDesktop = useMediaQuery('(min-width: 768px)')
 
 watch([isHoveringButton, isHoveringList], ([hoverBtn, hoverList]) => {
   if (!isDesktop.value) {
@@ -92,7 +92,7 @@ watch(
   bottom: 10px;
   right: 10px;
 
-  @media (width > 768px) {
+  @media (min-width: 768px) {
     width: fit-content;
     height: fit-content;
     right: 0;
@@ -119,7 +119,7 @@ watch(
     transform: scaleY(1);
   }
 
-  @media (width > 768px) {
+  @media (min-width: 768px) {
     background-color: var(--primary-color);
     border-radius: 0;
     bottom: 0px;
@@ -142,7 +142,7 @@ watch(
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
   transition: transform 0.3s ease;
 
-  @media (width > 768px) {
+  @media (min-width: 768px) {
     height: 85px;
     width: 100px;
   }
