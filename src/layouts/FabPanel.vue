@@ -2,17 +2,22 @@
 import { ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { useElementHover, useTimeoutFn, useMediaQuery } from '@vueuse/core'
+import { useUIStore } from '@/stores/ui'
+
 withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
+
+const uiStore = useUIStore()
 
 interface fabPanelItem {
   icon: string
   text: string
+  action: () => void
 }
 const fabPanelList: fabPanelItem[] = [
-  { icon: 'cart', text: '購物車' },
-  { icon: 'heart', text: '喜愛清單' },
-  { icon: 'search', text: '搜尋' },
-  { icon: 'bars', text: '菜單' }
+  { icon: 'cart', text: '購物車', action: () => {} },
+  { icon: 'heart', text: '喜愛清單', action: () => {} },
+  { icon: 'search', text: '搜尋', action: () => {} },
+  { icon: 'bars', text: '菜單', action: () => openSidebar() }
 ]
 
 const buttonRef = ref<HTMLElement | null>(null)
@@ -53,6 +58,11 @@ watch(
   },
   { immediate: true }
 )
+
+// 菜單呼叫
+function openSidebar() {
+  uiStore.toggleSidebar()
+}
 </script>
 
 <template>
@@ -66,6 +76,7 @@ watch(
         class="fabPanel__item flex flex-col items-center justify-center gap-1"
         v-for="(item, index) in fabPanelList"
         :key="index"
+        @click="item.action"
       >
         <Icon :icon="`flowbite:${item.icon}-outline`" width="36" height="36" />
         <span>{{ item.text }}</span>

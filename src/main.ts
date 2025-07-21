@@ -3,6 +3,9 @@ import './style.css'
 import App from './App.vue'
 import router from './router'
 
+// 引入pinia
+import { createPinia } from 'pinia'
+
 // 引入Bootstrap
 import { createBootstrap } from 'bootstrap-vue-next'
 
@@ -19,16 +22,17 @@ import BaseDialog from './components/BaseDialog.vue'
 
 // 引入swiper-element
 import { register } from 'swiper/element/bundle'
-register()
 
 const app = createApp(App)
+const pinia = createPinia()
+register()
 
+app.use(router)
+app.use(pinia)
 app.use(createBootstrap())
 
 // 全局註冊部分組件
 app.component('BaseButton', BaseButton)
 app.component('BaseDialog', BaseDialog)
 
-// 註冊 router
-app.use(router)
 app.mount('#app')
