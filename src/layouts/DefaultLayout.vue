@@ -4,13 +4,20 @@ import Footer from '@/layouts/Footer.vue'
 import FabPanel from '@/layouts/FabPanel.vue'
 import SideBar from '@/layouts/SideBar.vue'
 import BaseBreadCrumb from '@/components/BaseBreadCrumb.vue'
+import CategorySearchBar from '@/layouts/CategorySearchBar.vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
+
+const route = useRoute()
+const showCategorySearchBar = computed(() => route.name === 'HomePage')
 </script>
 
 <template>
   <div class="layout-container flex flex-col">
     <Header></Header>
+    <CategorySearchBar v-if="showCategorySearchBar"></CategorySearchBar>
 
     <!-- 畫面 -->
     <main
