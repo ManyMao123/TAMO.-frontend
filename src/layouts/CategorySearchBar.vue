@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
 import { ref } from 'vue'
+import BaseInput from '@/components/BaseInput.vue'
+import { Icon } from '@iconify/vue'
+
 withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
 
 const categoryList = ['WOMEN', 'MEN', 'KIDS', 'LIFESTYLE']
@@ -9,7 +12,7 @@ const categorySelectedIndex: Ref<null | number> = ref(null)
 
 <template>
   <!-- 分類及搜尋列 -->
-  <div class="category-container">
+  <div class="category-container flex justify-between items-center">
     <ul class="category-list flex p-2 lg:p-4">
       <li
         class="category-item"
@@ -22,8 +25,15 @@ const categorySelectedIndex: Ref<null | number> = ref(null)
       </li>
     </ul>
 
-    <div class="search-container">
+    <div class="search-container flex">
       <!-- input + search button -->
+      <BaseInput :placeholder="'有什麼想找的嗎？'">
+        <template #suffix>
+          <button>
+            <Icon icon="flowbite:search-outline" width="24" height="24" />
+          </button>
+        </template>
+      </BaseInput>
     </div>
   </div>
 </template>
@@ -70,6 +80,21 @@ const categorySelectedIndex: Ref<null | number> = ref(null)
   &.selected {
     background-color: var(--secondary-color);
     color: var(--white);
+  }
+}
+
+.search-container {
+  width: 300px;
+
+  button {
+    min-width: 50px;
+    min-height: 42px;
+    background: var(--secondary-color);
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
   }
 }
 </style>
