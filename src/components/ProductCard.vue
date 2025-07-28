@@ -38,6 +38,7 @@ function handleClick() {
 .product-card {
   display: flex;
   cursor: pointer;
+  position: relative;
 
   &::after {
     content: '';
