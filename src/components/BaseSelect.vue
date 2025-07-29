@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Icon } from '@iconify/vue'
+import { onClickOutside } from '@vueuse/core'
 
 const props = defineProps<{
   modelValue: string | number | null
@@ -8,6 +9,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['update:modelValue'])
+
+const selectRef = ref(null)
 
 const isOpen = ref(false)
 const toggleOpen = () => (isOpen.value = !isOpen.value)
@@ -22,13 +25,15 @@ const selectedLabel = computed(() => {
   const selected = props.options.find(o => o.value === props.modelValue)
   return selected?.label ?? '請選擇'
 })
+
+onClickOutside(selectRef, () => close())
 </script>
 
 <template>
-  <div class="select-container relative inline-block w-full">
+  <div class="select-container relative inline-block w-full" ref="selectRef">
     <!-- 顯示選擇 -->
     <div class="select-trigger flex justify-between items-center p-2" @click="toggleOpen">
-      {{ selectedLabel }}
+      <span class="select-text truncate">{{ selectedLabel }}</span>
       <Icon icon="flowbite:angle-down-outline" width="16" height="16" />
     </div>
 
@@ -54,9 +59,17 @@ const selectedLabel = computed(() => {
   font-size: 0.875rem;
 }
 
+.select-text {
+  max-width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .select-dropdown {
   font-size: 0.875rem;
   border: 1px solid var(--border-gray);
+  background-color: var(--white);
 }
 
 .select-option {
