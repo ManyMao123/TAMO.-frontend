@@ -17,3 +17,5 @@ A mock e-commerce fashion site built for portfolio purposes. Project by 🐙TAMO
 - **Tailwind CSS** – Utility-first CSS framework for rapid UI development
 - **Iconify** – Over 100,000 icons from popular sets, used for clean, scalable icons
 - **BootstrapVueNext** – Modern Bootstrap 5 components for Vue 3
+- **Lodash-es** – Lightweight utility library used for merging config and object manipulation in API handling
+- **Axios** – Promise-based HTTP client for making API requests
