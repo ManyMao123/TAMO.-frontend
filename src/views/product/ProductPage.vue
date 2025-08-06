@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import BaseBreadCrumb from '@/components/BaseBreadCrumb.vue'
 import productImages from '@/assets/images/products/P4167'
 import numeral from 'numeral'
 import ProductOptions from '@/views/product/components/ProductOptions.vue'
 import ProductReview from '@/views/product/components/ProductReview.vue'
 import StaffStyling from '@/views/product/components/StaffStyling.vue'
-import { computed } from 'vue'
 import BaseCollapse from '@/components/BaseCollapse.vue'
 import BaseButton from '@/components/BaseButton.vue'
 // import type { Product } from '@/types/models/product'

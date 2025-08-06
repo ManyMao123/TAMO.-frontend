@@ -11,6 +11,7 @@ import productImages from '@/assets/images/products'
 import BaseCarousel from '@/components/BaseCarousel.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import SectionBlock from '@/views/homepage/components/SectionBlock.vue'
+import productList from '@/mocks/product.json'
 // import type { Product } from '@/types/models/product'
 
 const mainSlides = [
@@ -27,16 +28,10 @@ const mainSlides = [
   { image: model5, title: '模特5-測試輪播' }
 ]
 
-const newClothSlides = productImages.map((img, index) => ({
-  image: img,
-  title: `圖片 ${index + 1}`,
-  product: {
-    id: 1,
-    name: '棉質巴里紗細褶罩衫',
-    price: 1500,
-    inStock: true,
-    img: img
-  }
+const newClothSlides = productList.map(product => ({
+  image: product.imgs[0].path,
+  title: product.name,
+  product: product
 }))
 
 // 取得目前視窗寬高
