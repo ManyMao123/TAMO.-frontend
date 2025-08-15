@@ -7,11 +7,11 @@ import model6 from '@/assets/images/model6.webp'
 import cloth1 from '@/assets/images/cloth1.webp'
 import cloth2 from '@/assets/images/cloth2.webp'
 import productImages from '@/assets/images/products'
-
 import BaseCarousel from '@/components/BaseCarousel.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import SectionBlock from '@/views/homepage/components/SectionBlock.vue'
 import productList from '@/mocks/product.json'
+import { useRouter } from 'vue-router'
 // import type { Product } from '@/types/models/product'
 
 const mainSlides = [
@@ -47,6 +47,12 @@ const productSlidesPerView = computed(() => {
   else if (width.value >= 768) return 3
   else return 1
 })
+
+const router = useRouter()
+// 頁面切換
+const goToOverview = (condition: Record<string, string>) => {
+  router.push({ name: 'ProductOverview', query: { ...condition } })
+}
 </script>
 
 <template>
@@ -72,7 +78,7 @@ const productSlidesPerView = computed(() => {
 
     <SectionBlock :title="'推薦關鍵字搜尋'" :subTitle="'HOT KEYWORDS'">
       <div class="grid grid-cols-2 md:flex gap-8">
-        <div class="category-container">
+        <div class="category-container" @click="goToOverview({ gender: 'female' })">
           <!-- 圖片+文字 -->
           <img
             src="../../assets/images/products/4222509_base.webp"

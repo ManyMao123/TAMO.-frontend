@@ -43,9 +43,9 @@ export const colorOptions: { label: string; value: ColorType; color: string }[] 
   { label: '粉色', value: 'pink', color: '#FFC0CB' },
   { label: '紅色', value: 'red', color: '#FF4500' },
   { label: '橘色', value: 'orange', color: '#FFA500' },
-  { label: '銀色', value: 'silver', color: '#C0C0C0' },
-  { label: '金色', value: 'gold', color: '#FFD700' },
-  { label: '其他色', value: 'other', color: '#cccccc' }
+  { label: '銀色', value: 'silver', color: '' },
+  { label: '金色', value: 'gold', color: '' },
+  { label: '其他色', value: 'other', color: '#ffffff' }
 ]
 
 export const stockStatusOptions: { label: string; value: StockStatus }[] = [
