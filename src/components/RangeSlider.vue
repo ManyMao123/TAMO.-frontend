@@ -26,6 +26,7 @@ watch(
 const sliderRef = ref<HTMLElement | null>(null)
 const sliderWidth = ref(0)
 const dragging = ref<'min' | 'max' | null>(null)
+const isDragging = ref(false)
 
 const minPercent = computed(
   () => ((internalRange.value.min - MIN_PRICE) / (MAX_PRICE - MIN_PRICE)) * 100
@@ -40,25 +41,39 @@ onMounted(() => {
   }
 })
 
-function onMouseDown(type: 'min' | 'max', event: MouseEvent) {
-  event.preventDefault()
-  dragging.value = type
-  window.addEventListener('mousemove', onMouseMove)
-  window.addEventListener('mouseup', onMouseUp)
-}
-
-function onMouseMove(event: MouseEvent) {
-  if (!dragging.value || !sliderRef.value || sliderWidth.value === 0) return
+// 計算點擊/拖曳的位置取整後的數值
+function calcPriceByPos(clientX: number): number | null {
+  if (!sliderRef.value || sliderWidth.value === 0) return null
 
   const rect = sliderRef.value.getBoundingClientRect()
-  let posX = event.clientX - rect.left
+  let posX = clientX - rect.left
   posX = Math.min(Math.max(0, posX), sliderWidth.value)
 
   const percent = (posX / sliderWidth.value) * 100
   const price = MIN_PRICE + ((MAX_PRICE - MIN_PRICE) * percent) / 100
-  // 每次滑動結果會是step倍數
+
   const step = 100
-  const priceStep = Math.round(price / step) * step
+  return Math.round(price / step) * step
+}
+
+// 開始拖曳
+function onPointerDown(type: 'min' | 'max', event: PointerEvent) {
+  event.preventDefault()
+  dragging.value = type
+  isDragging.value = true
+
+  // 確保事件被鎖定在這個元素上
+  ;(event.target as HTMLElement).setPointerCapture(event.pointerId)
+
+  window.addEventListener('pointermove', onPointerMove)
+  window.addEventListener('pointerup', onPointerUp)
+}
+
+function onPointerMove(event: PointerEvent) {
+  if (!dragging.value || !sliderRef.value || sliderWidth.value === 0) return
+
+  const priceStep = calcPriceByPos(event.clientX)
+  if (!priceStep) return
 
   if (dragging.value === 'min') {
     internalRange.value.min = Math.min(priceStep, internalRange.value.max)
@@ -69,33 +84,33 @@ function onMouseMove(event: MouseEvent) {
   emit('update:modelValue', { ...internalRange.value })
 }
 
-function onMouseUp() {
+// 結束拖曳
+function onPointerUp(event: PointerEvent) {
+  console.log('pointer up')
   dragging.value = null
-  window.removeEventListener('mousemove', onMouseMove)
-  window.removeEventListener('mouseup', onMouseUp)
+  window.removeEventListener('pointermove', onPointerMove)
+  window.removeEventListener('pointerup', onPointerUp)
+
+  // 拖曳結束後等一點時間再把 flag 清掉，避免 click 立刻觸發
+  setTimeout(() => (isDragging.value = false), 0)
 }
 
 function onTrackClick(event: MouseEvent) {
-  if (!sliderRef.value || sliderWidth.value === 0) return
+  if (isDragging.value || !sliderRef.value || sliderWidth.value === 0) return
 
-  const rect = sliderRef.value.getBoundingClientRect()
-  let posX = event.clientX - rect.left
-  posX = Math.min(Math.max(0, posX), sliderWidth.value)
-
-  const percent = (posX / sliderWidth.value) * 100
-  const price = MIN_PRICE + ((MAX_PRICE - MIN_PRICE) * percent) / 100
-  const priceInt = Math.round(price) // 取整數
+  const priceStep = calcPriceByPos(event.clientX)
+  if (!priceStep) return
 
   // 判斷點擊位置離 min 或 max 哪個更近
-  const distMin = Math.abs(priceInt - internalRange.value.min)
-  const distMax = Math.abs(priceInt - internalRange.value.max)
+  const distMin = Math.abs(priceStep - internalRange.value.min)
+  const distMax = Math.abs(priceStep - internalRange.value.max)
 
   if (distMin < distMax) {
     // 移動 min，且不超過 max
-    internalRange.value.min = Math.min(priceInt, internalRange.value.max)
+    internalRange.value.min = Math.min(priceStep, internalRange.value.max)
   } else {
     // 移動 max，且不低於 min
-    internalRange.value.max = Math.max(priceInt, internalRange.value.min)
+    internalRange.value.max = Math.max(priceStep, internalRange.value.min)
   }
 
   emit('update:modelValue', { ...internalRange.value })
@@ -107,13 +122,13 @@ function onTrackClick(event: MouseEvent) {
     <div
       class="range-slider__ball"
       :style="{ left: minPercent + '%' }"
-      @mousedown="e => onMouseDown('min', e)"
+      @pointerdown="e => onPointerDown('min', e)"
     ></div>
     <div class="range-slider__line"></div>
     <div
       class="range-slider__ball"
       :style="{ left: maxPercent + '%' }"
-      @mousedown="e => onMouseDown('max', e)"
+      @pointerdown="e => onPointerDown('max', e)"
     ></div>
   </div>
 </template>
