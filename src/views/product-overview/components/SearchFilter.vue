@@ -7,6 +7,9 @@ import RangeSlider from '@/components/RangeSlider.vue'
 import { Icon } from '@iconify/vue'
 import BaseCheckbox from '@/components/BaseCheckbox.vue'
 import CheckboxGroup from '@/components/CheckboxGroup.vue'
+import { useDevice } from '@/composables/useDevice'
+
+const { isMobile } = useDevice()
 
 // 特定項目(key)顯示range條
 const filterKeysIsRange = ['priceRange']
@@ -131,6 +134,11 @@ function processQueryByKey(key: string) {
 
 <template>
   <div class="search-filter">
+    <!-- 手機尺寸顯示 Title -->
+    <div v-if="isMobile" class="flex items-center gap-1 text-lg font-bold">
+      <Icon icon="flowbite:filter-outline" width="18" height="18" /> 篩選
+    </div>
+
     <div v-for="(option, key) in searchFilterOptions" :key="key">
       <div class="search-filter__header">{{ option.title }}</div>
       <ul class="search-filter__item">
@@ -198,8 +206,6 @@ function processQueryByKey(key: string) {
 
 <style scoped lang="scss">
 .search-filter {
-  margin-block: var(--space-md);
-
   > div {
     padding-block: var(--space-md);
   }
