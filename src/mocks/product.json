@@ -1,20 +1,109 @@
 [
   {
-    "id": 1,
-    "name": "衣服A",
+    "id": "P0001",
+    "name": "UR TECH DRYLUXE 仿亞麻外套",
+    "price": 1400,
+    "inStock": true,
+    "stockQty": 6,
+    "categoryId": "tops",
     "color": "yellow,white,navy",
+    "releaseDate": "2025-07-28 17:19:59",
     "imgs": [
       {
         "id": 1,
         "item_id": 1,
-        "path": "/img1.jpg",
+        "path": "/src/assets/images/products/4222509_base.webp",
         "color": "yellow"
       },
       {
         "id": 2,
         "item_id": 1,
         "path": "/img2.jpg",
-        "color": "白色"
+        "color": "white"
+      }
+    ]
+  },
+  {
+    "id": "P0002",
+    "name": "大口袋設計牛仔褲",
+    "price": 1800,
+    "inStock": true,
+    "stockQty": 10,
+    "categoryId": "bottoms",
+    "color": "black,lightBlue,khaki,brown",
+    "releaseDate": "2025-06-28 17:19:59",
+    "imgs": [
+      {
+        "id": 1,
+        "item_id": 1,
+        "path": "/src/assets/images/products/4248752_base.webp",
+        "color": "brown"
+      }
+    ]
+  },
+  {
+    "id": "P0003",
+    "name": "下襬抽繩設計套衫",
+    "price": 1250,
+    "inStock": true,
+    "stockQty": 9,
+    "categoryId": "tops",
+    "color": "charcoal,mint",
+    "releaseDate": "2025-06-29 17:19:59",
+    "imgs": [
+      {
+        "id": 1,
+        "item_id": 1,
+        "path": "/src/assets/images/products/4249136_base.webp",
+        "color": "charcoal"
+      },
+      {
+        "id": 2,
+        "item_id": 1,
+        "path": "/src/assets/images/products/4249137_base.webp",
+        "color": "mint"
+      }
+    ]
+  },
+  {
+    "id": "P0004",
+    "name": "亞麻混紡抽繩長版上衣",
+    "price": 1800,
+    "inStock": true,
+    "stockQty": 8,
+    "categoryId": "tops",
+    "color": "white,black",
+    "releaseDate": "2025-06-12 17:19:59",
+    "imgs": [
+      {
+        "id": 1,
+        "item_id": 1,
+        "path": "/src/assets/images/products/4261137_base.webp",
+        "color": "white"
+      },
+      {
+        "id": 2,
+        "item_id": 1,
+        "path": "/src/assets/images/products/4261138_base.webp",
+        "color": "black"
+      }
+    ]
+  },
+  {
+    "id": "P0005",
+    "name": "輕薄棉紗皺摺襯衫",
+    "price": 1800,
+    "inStock": true,
+    "stockQty": 1,
+    "categoryId": "tops",
+    "color": "white",
+    "releaseDate": "2025-06-28 12:19:59",
+    "imgs": [
+      {
+        "id": 1,
+        "item_id": 1,
+        "path": "/src/assets/images/products/4263238_base.webp",
+        "color": "white"
       }
     ]
   }

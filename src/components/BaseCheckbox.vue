@@ -1,23 +1,42 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
+import type { Ref } from 'vue'
 
-const props = withDefaults(defineProps<{ label?: string; value?: boolean | string }>(), {
-  label: '選項',
-  value: true
-})
+const props = withDefaults(
+  defineProps<{
+    label?: string
+    value?: string | boolean
+    modelValue?: string | boolean
+    circle?: boolean
+  }>(),
+  {
+    label: '選項',
+    value: true,
+    circle: false
+  }
+)
 
 const emit = defineEmits(['update:modelValue'])
-const modelValue = defineModel<string | boolean>()
+
+// inject group
+const group = inject<{
+  checkedList: Ref<Array<string | boolean>>
+  toggleValue: (val: string | boolean) => void
+} | null>('checkboxGroup', null)
 
 const isChecked = computed({
   get() {
-    return modelValue.value === props.value
+    if (group) {
+      return group.checkedList.value.includes(props.value!)
+    } else {
+      return props.modelValue === props.value
+    }
   },
   set(val: boolean) {
-    if (typeof props.value === 'string') {
-      modelValue.value = val ? props.value : undefined
+    if (group) {
+      group.toggleValue(props.value!)
     } else {
-      modelValue.value = val
+      emit('update:modelValue', val ? props.value : undefined)
     }
   }
 })
@@ -25,8 +44,10 @@ const isChecked = computed({
 
 <template>
   <label class="checkbox-wrapper">
-    <input type="checkbox" v-model="isChecked" />
-    <span class="checkbox-label">{{ label }}</span>
+    <input type="checkbox" v-model="isChecked" :class="{ 'is-circle': circle }" />
+    <span class="checkbox-label flex gap-1 items-center justify-center">
+      <slot>{{ label }}</slot>
+    </span>
   </label>
 </template>
 
@@ -83,6 +104,33 @@ const isChecked = computed({
   input[type='checkbox']:disabled + .checkbox-label {
     color: #aaa;
     cursor: not-allowed;
+  }
+
+  // 圓形
+  input[type='checkbox'].is-circle {
+    border-radius: 50%;
+    border: 1px solid var(--border-gray);
+  }
+
+  input[type='checkbox'].is-circle::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 4px;
+    height: 10px;
+    border: solid var(--border-gray);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  input[type='checkbox'].is-circle:checked {
+    border: 1px solid var(--light-brown);
+  }
+
+  input[type='checkbox'].is-circle:checked::after {
+    border: solid var(--white);
+    border-width: 0 2px 2px 0;
   }
 }
 

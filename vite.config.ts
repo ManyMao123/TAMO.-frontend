@@ -24,5 +24,9 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src') // 設置 @ 為 src 目錄
     }
+  },
+  server: {
+    host: '0.0.0.0',
+    port: 5173
   }
 })

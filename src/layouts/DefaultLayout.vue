@@ -11,7 +11,9 @@ import { useRoute } from 'vue-router'
 withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
 
 const route = useRoute()
-const showCategorySearchBar = computed(() => route.name === 'HomePage')
+const showCategorySearchBar = computed(
+  () => route.name === 'HomePage' || route.name === 'ProductOverview'
+)
 </script>
 
 <template>

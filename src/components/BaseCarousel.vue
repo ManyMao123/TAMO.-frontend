@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import type { Product } from '@/types/models/product'
+import type { Product } from '@/types/models/product.types'
 
 // 幻燈片物件型別
 type Slide = {

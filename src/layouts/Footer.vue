@@ -38,11 +38,16 @@ withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
 }
 
 .footer-category {
-  padding-inline: var(--space-2xl);
-  padding-block: var(--space-xl);
+  padding-inline: var(--space-xl);
+  padding-block: var(--space-lg);
   min-height: 180px;
   background-color: var(--secondary-color);
   color: var(--white);
+
+  @media (width > 768px) {
+    padding-inline: var(--space-2xl);
+    padding-block: var(--space-xl);
+  }
 }
 
 .footer_nav_wrapper {

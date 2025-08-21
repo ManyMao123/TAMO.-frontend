@@ -1,6 +1,13 @@
+export interface ProductImage {
+  id: number
+  item_id: number
+  path: string
+  color: string
+}
+
 export interface Product {
   // 產品編號
-  id: number
+  id: string
   // 產品名稱
   name: string
   // 價格
@@ -9,8 +16,11 @@ export interface Product {
   inStock: boolean
   // 庫存數
   stockQty: number
-  // 圖片
-  img: string
   // 分類
   categoryId: string
+  // 圖片
+  imgs: ProductImage[]
+  // 顏色
+  color: string
+  releaseDate: string
 }
