@@ -7,6 +7,7 @@ import { useUIStore } from '@/stores/ui'
 withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
 
 const uiStore = useUIStore()
+const { openSidebar } = uiStore
 
 interface fabPanelItem {
   icon: string
@@ -16,8 +17,8 @@ interface fabPanelItem {
 const fabPanelList: fabPanelItem[] = [
   { icon: 'cart', text: '購物車', action: () => {} },
   { icon: 'heart', text: '喜愛清單', action: () => {} },
-  { icon: 'search', text: '搜尋', action: () => {} },
-  { icon: 'bars', text: '菜單', action: () => openSidebar() }
+  { icon: 'search', text: '搜尋', action: () => openSidebar('search') },
+  { icon: 'bars', text: '菜單', action: () => openSidebar('menu') }
 ]
 
 const buttonRef = ref<HTMLElement | null>(null)
@@ -58,11 +59,6 @@ watch(
   },
   { immediate: true }
 )
-
-// 菜單呼叫
-function openSidebar() {
-  uiStore.toggleSidebar()
-}
 </script>
 
 <template>

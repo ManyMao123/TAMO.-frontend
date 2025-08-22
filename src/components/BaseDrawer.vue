@@ -1,9 +1,21 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 
-withDefaults(defineProps<{ modelValue: boolean; side?: 'left' | 'right' }>(), {
-  side: 'right'
-})
+withDefaults(
+  defineProps<{
+    modelValue: boolean
+    side?: 'left' | 'right'
+    isRounded?: boolean
+    maxWidth?: number
+    showCloseButton?: boolean
+  }>(),
+  {
+    side: 'right',
+    isRounded: false,
+    maxWidth: 500,
+    showCloseButton: true
+  }
+)
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -19,10 +31,16 @@ function closeDrawer() {
     <div
       v-if="modelValue"
       class="drawer"
-      :class="side === 'right' ? 'drawer-right' : 'drawer-left'"
+      :class="{
+        'is-rounded': isRounded,
+        'drawer-right': side === 'right',
+        'drawer-left': side === 'left'
+      }"
+      :style="{ 'max-width': maxWidth + 'px' }"
+      v-bind="$attrs"
     >
       <!-- 右上角關閉按鈕 -->
-      <button class="drawer-close-btn" @click="closeDrawer">
+      <button v-if="showCloseButton" class="drawer-close-btn" @click="closeDrawer">
         <Icon icon="flowbite:close-outline" width="20" height="20" />
       </button>
 
@@ -31,7 +49,7 @@ function closeDrawer() {
   </transition>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .drawer-overlay {
   position: fixed;
   inset: 0;
@@ -44,15 +62,18 @@ function closeDrawer() {
   top: 0;
   bottom: 0;
   width: 80%;
-  max-width: 320px;
+
   background: #fff;
   z-index: 10008;
   overflow-y: auto;
   transition: transform 0.3s ease;
-  padding-inline: 20px;
-  border-radius: 6px 0 0 6px;
-  margin-block: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding-inline: 20px;
+
+  &.is-rounded {
+    border-radius: 6px 0 0 6px;
+    margin-block: 8px;
+  }
 }
 
 .drawer-close-btn {

@@ -81,7 +81,7 @@ const showDrawer = ref(false)
         <Icon icon="flowbite:filter-outline" width="16" height="16" /> 篩選
       </button>
 
-      <BaseDrawer v-model="showDrawer"> <SearchFilter /></BaseDrawer>
+      <BaseDrawer v-model="showDrawer" :max-width="320" is-rounded> <SearchFilter /></BaseDrawer>
 
       <div class="w-full">
         <div class="product-list-header flex flex-col items-end gap-4">
