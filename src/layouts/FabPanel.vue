@@ -3,11 +3,14 @@ import { ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { useElementHover, useTimeoutFn, useMediaQuery } from '@vueuse/core'
 import { useUIStore } from '@/stores/ui'
+import { useRouter } from 'vue-router'
 
 withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
 
 const uiStore = useUIStore()
 const { openSidebar } = uiStore
+
+const router = useRouter()
 
 interface fabPanelItem {
   icon: string
@@ -15,7 +18,13 @@ interface fabPanelItem {
   action: () => void
 }
 const fabPanelList: fabPanelItem[] = [
-  { icon: 'cart', text: '購物車', action: () => {} },
+  {
+    icon: 'cart',
+    text: '購物車',
+    action: () => {
+      router.push({ name: 'ShoppingCart' })
+    }
+  },
   { icon: 'heart', text: '喜愛清單', action: () => {} },
   { icon: 'search', text: '搜尋', action: () => openSidebar('search') },
   { icon: 'bars', text: '菜單', action: () => openSidebar('menu') }

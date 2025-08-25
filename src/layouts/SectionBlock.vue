@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 withDefaults(defineProps<{ title?: string; subTitle?: string }>(), {
-  title: 'Title',
-  subTitle: 'sub Title'
+  title: 'Title'
 })
 </script>
 
 <template>
   <div class="section-block">
     <p class="title__main">{{ title }}</p>
-    <p class="title__sub">- {{ subTitle }} -</p>
+    <p v-if="subTitle" class="title__sub">- {{ subTitle }} -</p>
 
     <div class="p-4 lg:p-6 w-full">
       <slot></slot>
