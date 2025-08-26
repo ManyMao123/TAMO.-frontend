@@ -3,6 +3,7 @@ import HomePage from '@/views/homepage/HomePage.vue'
 import ProductPage from '@/views/product/ProductPage.vue'
 import LoginPage from '@/views/login/LoginPage.vue'
 import ProductOverview from '@/views/product-overview/ProductOverview.vue'
+import ShoppingCart from '@/views/shopping-cart/ShoppingCart.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/product/:id',
     name: 'ProductPage',
     component: ProductPage
+  },
+  {
+    path: '/cart',
+    name: 'ShoppingCart',
+    component: ShoppingCart
   }
 ]
 

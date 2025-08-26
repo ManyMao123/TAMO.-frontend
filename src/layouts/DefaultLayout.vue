@@ -2,7 +2,7 @@
 import Header from '@/layouts/Header.vue'
 import Footer from '@/layouts/Footer.vue'
 import FabPanel from '@/layouts/FabPanel.vue'
-import SideBar from '@/layouts/SideBar.vue'
+import SideBar from '@/layouts/sidebar/SideBar.vue'
 import BaseBreadCrumb from '@/components/BaseBreadCrumb.vue'
 import CategorySearchBar from '@/layouts/CategorySearchBar.vue'
 import { computed } from 'vue'
