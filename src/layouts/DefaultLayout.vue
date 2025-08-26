@@ -17,7 +17,7 @@ const showCategorySearchBar = computed(
 </script>
 
 <template>
-  <div class="layout-container flex flex-col">
+  <div class="layout-container flex flex-col mt-20">
     <Header></Header>
     <CategorySearchBar v-if="showCategorySearchBar"></CategorySearchBar>
 
