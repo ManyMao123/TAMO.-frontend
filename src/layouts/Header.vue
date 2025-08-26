@@ -1,31 +1,31 @@
 <script setup lang="ts">
-import type { Ref } from 'vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useWindowScroll } from '@vueuse/core'
+
 withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
 
-const headerLeftSelected: Ref<boolean> = ref(true)
+const { y } = useWindowScroll()
 
-const categoryList = ['WOMEN', 'MEN', 'KIDS', 'LIFESTYLE']
-const categorySelectedIndex: Ref<null | number> = ref(null)
+const isHidden = ref(false)
+let lastY = 0
+
+watch(y, newY => {
+  if (newY > lastY && newY > 50) {
+    isHidden.value = true
+  } else {
+    isHidden.value = false
+  }
+  lastY = newY
+})
 </script>
 
 <template>
-  <header>
-    <!-- 最上方的兩大區塊 -->
-    <div class="header-container">
-      <div :class="{ 'is-selected': headerLeftSelected }" @click="headerLeftSelected = true">
-        <div class="img-container">
-          <img src="../assets/images/logo.svg" alt="logo.svg" />
-        </div>
-      </div>
-
-      <div :class="{ 'is-selected': !headerLeftSelected }" @click="headerLeftSelected = false">
-        <div class="img-container">
-          <!-- <img src="" alt="" /> -->
-          <!-- 先隨便用文字代替 -->
-          <span>MEDIA</span>
-        </div>
-      </div>
+  <header
+    class="header-container fixed top-0 left-0 transition-transform duration-300"
+    :class="{ '-translate-y-full': isHidden }"
+  >
+    <div class="img-container m-auto">
+      <img src="../assets/images/logo.svg" alt="logo.svg" />
     </div>
   </header>
 </template>
@@ -33,33 +33,20 @@ const categorySelectedIndex: Ref<null | number> = ref(null)
 <style scoped lang="scss">
 .header-container {
   width: 100%;
+  height: 78px;
   display: flex;
-  border-bottom: 1px solid #e5e5e5;
+  z-index: 9999;
+  background: var(--white);
+  border-bottom: 2px solid var(--secondary-color);
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 0.1),
+    0 1px 2px -1px rgb(0 0 0 / 0.1);
 
-  div {
-    width: 100%;
-    height: 87px;
-
-    &.is-selected {
-      border-bottom: 8px solid var(--secondary-color);
-    }
-  }
   .img-container {
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-
-    img {
-      // width: 100%;
-      // height: 100%;
-    }
-
-    span {
-      color: var(--secondary-color);
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
   }
 }
 </style>
