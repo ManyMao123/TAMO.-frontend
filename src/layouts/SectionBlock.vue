@@ -10,7 +10,7 @@ withDefaults(defineProps<{ title?: string; subTitle?: string }>(), {
     <p class="title__main">{{ title }}</p>
     <p v-if="subTitle" class="title__sub">- {{ subTitle }} -</p>
 
-    <div class="p-4 lg:p-6 w-full">
+    <div class="p-12 w-full">
       <slot></slot>
     </div>
   </div>

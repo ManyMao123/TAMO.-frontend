@@ -23,7 +23,8 @@ const showCategorySearchBar = computed(
 
     <!-- 畫面 -->
     <main
-      class="layout-container__main flex-1 flex items-center justify-center py-2 md:py-4 lg:py-10"
+      class="layout-container__main flex-1 flex items-center justify-center"
+      :class="route.name === 'HomePage' ? 'pb-2 md:pb-4 lg:pb-10' : 'py-2 md:py-4 lg:py-10'"
     >
       <slot></slot>
     </main>
