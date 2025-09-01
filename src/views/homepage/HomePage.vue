@@ -6,7 +6,6 @@ import model5 from '@/assets/images/model5.webp'
 import model6 from '@/assets/images/model6.webp'
 import cloth1 from '@/assets/images/cloth1.webp'
 import cloth2 from '@/assets/images/cloth2.webp'
-import productImages from '@/assets/images/products'
 import BaseCarousel from '@/components/BaseCarousel.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import SectionBlock from '@/layouts/SectionBlock.vue'
@@ -38,13 +37,26 @@ const newClothSlides = productList.map(product => ({
 const { width } = useWindowSize()
 
 // 主幻燈片設定
-const mainSliderWidth = computed(() => (width.value >= 1280 ? '3100px' : '100%'))
-const mainSlidesPerView = computed(() => (width.value >= 1280 ? 5 : 1))
+const mainSliderWidth = computed(() => {
+  if (width.value >= 1280) return 2900
+  else if (width.value >= 540) return 1280
+  else return 540
+})
+const mainSliderHeight = computed(() => {
+  if (width.value >= 1280) return 780
+  else return 680
+})
+const mainSlidesPerView = computed(() => {
+  if (width.value >= 1280) return 5
+  else if (width.value >= 540) return 3
+  else return 1
+})
 
 // 商品幻燈片設定
 const productSlidesPerView = computed(() => {
   if (width.value >= 1280) return 4
   else if (width.value >= 768) return 3
+  else if (width.value >= 540) return 2
   else return 1
 })
 
@@ -63,7 +75,7 @@ const goToOverview = (condition: Record<string, string>) => {
       :slides-per-view="mainSlidesPerView"
       :enable-autoplay="true"
       :width="mainSliderWidth"
-      :height="780"
+      :height="mainSliderHeight"
       :space-between="20"
       :centered-slides="true"
     ></BaseCarousel>
@@ -122,7 +134,6 @@ const goToOverview = (condition: Record<string, string>) => {
         :slides="newClothSlides"
         :slides-per-view="productSlidesPerView"
         :slides-per-group="productSlidesPerView"
-        :height="420"
         :enable-pagination="false"
         :spaceBetween="4"
       >
@@ -137,7 +148,6 @@ const goToOverview = (condition: Record<string, string>) => {
         :slides="newClothSlides"
         :slides-per-view="productSlidesPerView"
         :slides-per-group="productSlidesPerView"
-        :height="420"
         :enable-pagination="false"
         :spaceBetween="4"
       >

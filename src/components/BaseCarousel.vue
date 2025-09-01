@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import type { Product } from '@/types/models/product.types'
+import { useElementSize, useWindowSize } from '@vueuse/core'
 
 // 幻燈片物件型別
 type Slide = {
@@ -14,14 +15,13 @@ const props = withDefaults(
     slides: Slide[]
     slidesPerView?: number
     slidesPerGroup?: number
-    width?: string
+    width?: number
     height?: number
     enablePagination?: boolean
     enableAutoplay?: boolean
     spaceBetween?: number
     centeredSlides?: boolean
     navigation?: boolean
-    rows?: number
   }>(),
   {
     slides: () => [
@@ -37,13 +37,25 @@ const props = withDefaults(
     enablePagination: true,
     enableAutoplay: false,
     spaceBetween: 10,
-    centeredSlides: false,
-    rows: 1
+    centeredSlides: false
   }
 )
 
 const swiperRef = ref()
 const currentIndex = ref(0)
+
+// 拿到幻燈片容器的寬度
+const { width: swiperWidth } = useElementSize(swiperRef)
+
+// 拿到視窗寬度
+const { width: windowWidth } = useWindowSize()
+
+// 判斷是否比 body (視窗) 寬
+const isWiderThanBody = computed(() => swiperWidth.value > windowWidth.value)
+
+const uid = Math.random().toString(36).substring(2, 9)
+const prevClass = `swiper-button-prev-${uid}`
+const nextClass = `swiper-button-next-${uid}`
 
 const onSlideChange = () => {
   const swiper = swiperRef.value?.swiper
@@ -72,65 +84,62 @@ const goTo = (index: number) => {
   swiperRef.value.swiper.slideTo(index)
   currentIndex.value = index
 }
-
-// 箭頭往前
-const slidePrev = () => {
-  const swiper = swiperRef.value?.swiper
-  swiper?.slidePrev()
-}
-
-// 箭頭往後
-const slideNext = () => {
-  const swiper = swiperRef.value?.swiper
-  swiper?.slideNext()
-}
 </script>
 
 <template>
-  <swiper-container
-    ref="swiperRef"
-    :slides-per-view="slidesPerView"
-    :slides-per-group="1"
-    :loop="true"
-    :space-between="spaceBetween"
-    :centered-slides="centeredSlides"
-    :pagination="paginationOption"
-    :grid="{ rows: rows, fill: 'row' }"
-    :navigation="{
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    }"
-    :autoplay="autoplayOption"
-    :breakpoints="{
-      768: {
-        slidesPerView: slidesPerView
-      }
-    }"
-    @slidechange="onSlideChange"
-    style="padding: 0; width: 100%; height: 100%"
-    :style="{ minWidth: width, maxWidth: width }"
-  >
-    <swiper-slide v-for="(item, index) in slides" :key="index">
-      <!-- <img :src="item.image" :alt="item.title" /> -->
-      <!-- <ProductCard v-else :product="item.product || null"></ProductCard> -->
-      <slot :item="item" :index="index">
-        <!-- fallback 預設插槽：顯示圖片 -->
-        <img :src="item.image" :alt="item.title" />
-      </slot>
-    </swiper-slide>
-  </swiper-container>
-
-  <div class="swiper-button-prev" @click="slidePrev"></div>
-  <div class="swiper-button-next" @click="slideNext"></div>
-
-  <div class="custom-pagination" v-if="paginationOption">
-    <span
-      v-for="(_, index) in slides"
-      :key="index"
-      :class="{ active: index === currentIndex }"
-      @click="goTo(index)"
+  <div class="relative w-full flex flex-col justify-center items-center gap-8">
+    <swiper-container
+      ref="swiperRef"
+      :slides-per-view="slidesPerView"
+      :slides-per-group="1"
+      :loop="true"
+      :space-between="spaceBetween"
+      :centered-slides="centeredSlides"
+      :pagination="paginationOption"
+      :grid="{ rows: 1, fill: 'row' }"
+      :navigation="{
+        prevEl: '.' + prevClass,
+        nextEl: '.' + nextClass
+      }"
+      :autoplay="autoplayOption"
+      :breakpoints="{
+        768: {
+          slidesPerView: slidesPerView
+        }
+      }"
+      @slidechange="onSlideChange"
+      style="padding: 0; width: 100%"
+      :style="{ minWidth: width + 'px', maxWidth: width + 'px' }"
+      auto-height="true"
     >
-    </span>
+      <swiper-slide
+        v-for="(item, index) in slides"
+        :key="index"
+        :style="{ maxHeight: height + 'px' }"
+      >
+        <slot :item="item" :index="index">
+          <!-- 預設插槽：顯示圖片 -->
+          <div>
+            <img :src="item.image" :alt="item.title" />
+          </div>
+        </slot>
+      </swiper-slide>
+    </swiper-container>
+
+    <div :class="['swiper-button-prev', prevClass, isWiderThanBody ? 'left-0' : '-left-12']"></div>
+    <div
+      :class="['swiper-button-next', nextClass, isWiderThanBody ? 'right-0' : '-right-12']"
+    ></div>
+
+    <div class="custom-pagination" v-if="paginationOption">
+      <span
+        v-for="(_, index) in slides"
+        :key="index"
+        :class="{ active: index === currentIndex }"
+        @click="goTo(index)"
+      >
+      </span>
+    </div>
   </div>
 </template>
 
@@ -140,15 +149,14 @@ const slideNext = () => {
   width: 40px;
   height: 80px;
   position: absolute;
-  top: 450px;
+  top: 50%;
+  transform: translateY(-100%);
   z-index: 3333;
   background-color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
 }
 
 .swiper-button-prev {
-  left: 0;
-
   &::after {
     content: '';
     position: absolute;
@@ -167,8 +175,6 @@ const slideNext = () => {
 }
 
 .swiper-button-next {
-  right: 0;
-
   &::after {
     content: '';
     position: absolute;

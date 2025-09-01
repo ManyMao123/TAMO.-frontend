@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Product } from '@/types/models/product.types'
 import numeral from 'numeral'
-import productSample from '@/assets/images/products/P4167/4167142_yellow.webp'
 import { useRouter } from 'vue-router'
 import productList from '@/mocks/product.json'
 import { computed } from 'vue'
@@ -28,9 +27,17 @@ const isNew = computed(() => {
 </script>
 
 <template>
-  <div class="product-card flex flex-col" @click="handleClick">
+  <div class="product-card w-full" @click="handleClick">
     <div class="product-card__badge w-fit" v-if="isNew">新品</div>
-    <img class="product-card__image" :src="product?.imgs[0].path" />
+
+    <div class="img-container aspect-[4/5] w-full overflow-hidden">
+      <img
+        class="product-card__image w-full h-full object-cover"
+        :src="product?.imgs[0].path"
+        alt="product image"
+      />
+    </div>
+
     <div class="product-card__detail">
       <p>{{ product?.name || '' }}</p>
       <span>{{ product?.price ? numeral(product?.price).format('0,0') : '' }}</span>
@@ -41,7 +48,6 @@ const isNew = computed(() => {
 
 <style scoped lang="scss">
 .product-card {
-  display: flex;
   cursor: pointer;
   position: relative;
 
@@ -65,11 +71,12 @@ const isNew = computed(() => {
   }
 
   &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; // 保持比例並填滿
   }
 
   &__detail {
-    // display: flex;
-    // flex-direction: column;
     padding-block: 8px;
     font-size: 0.875rem;
 
