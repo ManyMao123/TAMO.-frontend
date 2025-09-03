@@ -11,7 +11,12 @@ const { closeSidebar } = uiStore
 
 function goToLoginPage() {
   closeSidebar()
-  router.push({ name: 'LoginPage' })
+  router.push({ name: 'LoginPage', query: { status: 'signin' } })
+}
+
+function goToSignUp() {
+  closeSidebar()
+  router.push({ name: 'LoginPage', query: { status: 'signup' } })
 }
 
 const historyProductList = productImages.map((e, index) => ({
@@ -26,9 +31,8 @@ const historyProductList = productImages.map((e, index) => ({
       <Icon icon="flowbite:user-circle-outline" width="30" height="30" />
       會員登入
     </div>
-    <div>
+    <div @click="goToSignUp">
       <Icon icon="flowbite:user-add-solid" width="30" height="30" />
-
       註冊
     </div>
   </div>
