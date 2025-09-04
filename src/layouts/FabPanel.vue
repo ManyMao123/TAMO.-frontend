@@ -25,7 +25,13 @@ const fabPanelList: fabPanelItem[] = [
       router.push({ name: 'ShoppingCart' })
     }
   },
-  { icon: 'heart', text: '喜愛清單', action: () => {} },
+  {
+    icon: 'heart',
+    text: '喜愛清單',
+    action: () => {
+      router.push({ name: 'FavoritePage' })
+    }
+  },
   { icon: 'search', text: '搜尋', action: () => openSidebar('search') },
   { icon: 'bars', text: '菜單', action: () => openSidebar('menu') }
 ]

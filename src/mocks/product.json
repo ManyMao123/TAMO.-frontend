@@ -7,7 +7,10 @@
     "stockQty": 6,
     "categoryId": "tops",
     "color": "yellow,white,navy",
+    "size": "FREE",
     "releaseDate": "2025-07-28 17:19:59",
+    "isSale": false,
+    "isTimeSale": true,
     "imgs": [
       {
         "id": 1,
@@ -31,7 +34,10 @@
     "stockQty": 10,
     "categoryId": "bottoms",
     "color": "black,lightBlue,khaki,brown",
+    "size": "FREE",
     "releaseDate": "2025-06-28 17:19:59",
+    "isSale": false,
+    "isTimeSale": false,
     "imgs": [
       {
         "id": 1,
@@ -49,7 +55,10 @@
     "stockQty": 9,
     "categoryId": "tops",
     "color": "charcoal,mint",
+    "size": "FREE",
     "releaseDate": "2025-06-29 17:19:59",
+    "isSale": false,
+    "isTimeSale": false,
     "imgs": [
       {
         "id": 1,
@@ -73,7 +82,10 @@
     "stockQty": 8,
     "categoryId": "tops",
     "color": "white,black",
+    "size": "FREE",
     "releaseDate": "2025-06-12 17:19:59",
+    "isSale": true,
+    "isTimeSale": false,
     "imgs": [
       {
         "id": 1,
@@ -97,7 +109,10 @@
     "stockQty": 1,
     "categoryId": "tops",
     "color": "white",
+    "size": "FREE",
     "releaseDate": "2025-06-28 12:19:59",
+    "isSale": true,
+    "isTimeSale": false,
     "imgs": [
       {
         "id": 1,

@@ -4,6 +4,7 @@ import ProductPage from '@/views/product/ProductPage.vue'
 import LoginPage from '@/views/login/LoginPage.vue'
 import ProductOverview from '@/views/product-overview/ProductOverview.vue'
 import ShoppingCart from '@/views/shopping-cart/ShoppingCart.vue'
+import FavoritePage from '@/views/favorite/FavoritePage.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/cart',
     name: 'ShoppingCart',
     component: ShoppingCart
+  },
+  {
+    path: '/favorite',
+    name: 'FavoritePage',
+    component: FavoritePage
   }
 ]
 
