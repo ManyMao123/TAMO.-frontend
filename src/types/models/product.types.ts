@@ -22,5 +22,12 @@ export interface Product {
   imgs: ProductImage[]
   // 顏色
   color: string
+  // 尺寸
+  size: string
+  // 發行日
   releaseDate: string
+  // 是否特價
+  isSale: boolean
+  // 是否限時特賣
+  isTimeSale: boolean
 }
