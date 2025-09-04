@@ -32,7 +32,7 @@ const hasDiscount = computed(() => props.product?.isSale || props.product?.isTim
     </div>
 
     <!-- 第二列：商品資訊 -->
-    <div class="item-info flex gap-8">
+    <div class="item-info flex flex-col md:flex-row gap-8">
       <div class="img-container">
         <img :src="product.imgs[0].path" alt="" />
       </div>
