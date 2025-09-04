@@ -31,6 +31,10 @@ const favCount = computed(() => productList.length)
 
 <style scoped lang="scss">
 .list-section {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+
+  @media (width > 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>
