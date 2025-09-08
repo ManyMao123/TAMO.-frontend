@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Product } from '@/types/models/product.types'
-import numeral from 'numeral'
 import { useRouter } from 'vue-router'
+import { useFormat } from '@/composables/useFormat'
 import productList from '@/mocks/product.json'
 import { computed } from 'vue'
 import dayjs from 'dayjs'
@@ -18,6 +18,8 @@ const router = useRouter()
 function handleClick() {
   router.push({ name: 'ProductPage', params: { id: '1' } })
 }
+
+const { price } = useFormat()
 
 const isNew = computed(() => {
   const today = dayjs()
@@ -40,7 +42,7 @@ const isNew = computed(() => {
 
     <div class="product-card__detail">
       <p>{{ product?.name || '' }}</p>
-      <span>{{ product?.price ? numeral(product?.price).format('0,0') : '' }}</span>
+      <span>{{ product?.price ? price(product?.price) : '' }}</span>
       元
     </div>
   </div>

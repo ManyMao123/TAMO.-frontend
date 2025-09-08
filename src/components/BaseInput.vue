@@ -12,6 +12,16 @@ const props = defineProps<{
   required?: boolean
   disabled?: boolean
 }>()
+
+const increment = () => {
+  const val = (Number(modelValue.value) || 1) + 1
+  modelValue.value = val.toString()
+}
+
+const decrement = () => {
+  const val = Math.max(1, (Number(modelValue.value) || 1) - 1)
+  modelValue.value = val.toString()
+}
 </script>
 
 <template>
@@ -41,13 +51,13 @@ const props = defineProps<{
       <div v-if="type === 'number'" class="number-button flex flex-col">
         <button
           class="w-6 h-1/2 flex justify-center items-center hover:bg-gray-100"
-          @click="modelValue = ((parseInt(modelValue) || 1) + 1).toString()"
+          @click="increment"
         >
           <Icon icon="flowbite:caret-up-solid" width="12" height="12" />
         </button>
         <button
           class="w-6 h-1/2 flex justify-center items-center hover:bg-gray-100"
-          @click="modelValue = Math.max(1, (parseInt(modelValue) || 1) - 1).toString()"
+          @click="decrement"
         >
           <Icon icon="flowbite:caret-down-solid" width="12" height="12" />
         </button>

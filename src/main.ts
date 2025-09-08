@@ -5,6 +5,7 @@ import router from './router'
 
 // 引入pinia
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 // 引入Bootstrap
 import { createBootstrap } from 'bootstrap-vue-next'
@@ -25,6 +26,7 @@ import { register } from 'swiper/element/bundle'
 
 const app = createApp(App)
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 register()
 
 app.use(router)
