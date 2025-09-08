@@ -2,12 +2,12 @@
 import { ref, computed } from 'vue'
 import BaseBreadCrumb from '@/components/BaseBreadCrumb.vue'
 import productImages from '@/assets/images/products/P4167'
-import numeral from 'numeral'
 import ProductOptions from '@/views/product/components/ProductOptions.vue'
 import ProductReview from '@/views/product/components/ProductReview.vue'
 import StaffStyling from '@/views/product/components/StaffStyling.vue'
 import BaseCollapse from '@/components/BaseCollapse.vue'
 import BaseButton from '@/components/BaseButton.vue'
+import { useFormat } from '@/composables/useFormat'
 // import type { Product } from '@/types/models/product'
 
 const breadcrumbs = [
@@ -16,6 +16,8 @@ const breadcrumbs = [
   { label: 'シャツ・ブラウス', href: '/tops/shirts' },
   { label: '2WAYコンパクトレースブラウス' }
 ]
+
+const { price } = useFormat()
 
 const typeMap = new Map<string, { type: string; id: string; img: string[] }>()
 
@@ -119,7 +121,7 @@ function showNextImage() {
           <div class="product-info">
             <div>
               <p class="product-info__name">『UR TECH』ポケッタブル撥水フレアパーカー</p>
-              <p class="product-info__price">{{ '$' + numeral(1650).format('0,0') }}</p>
+              <p class="product-info__price">{{ '$' + price(1650) }}</p>
             </div>
             <p class="product-info__rating">
               ⭐⭐⭐⭐<a href="#review-section">（共 7 則評論）</a>

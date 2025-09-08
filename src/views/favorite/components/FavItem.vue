@@ -3,7 +3,10 @@ import { Icon } from '@iconify/vue'
 import BaseButton from '@/components/BaseButton.vue'
 import productList from '@/mocks/product.json'
 import { computed } from 'vue'
+import { useFormat } from '@/composables/useFormat'
 import type { Product } from '@/types/models/product.types'
+
+const { price } = useFormat()
 
 const props = withDefaults(defineProps<{ product: Product | null }>(), {
   product: () => productList[4]
@@ -52,11 +55,11 @@ const hasDiscount = computed(() => props.product?.isSale || props.product?.isTim
             <dd>{{ product.size }}</dd>
             <dt>價格</dt>
             <dd :class="{ 'is-sale': hasDiscount }">
-              <p>${{ product.price }}</p>
+              <p>${{ price(product.price) }}</p>
 
               <template v-if="hasDiscount">
                 <p>
-                  ${{ product.price * discountRate }}
+                  ${{ price(product.price * discountRate) }}
                   <span class="discount-text">{{ discountText }}</span>
                 </p>
               </template>

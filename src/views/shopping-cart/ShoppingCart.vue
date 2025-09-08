@@ -1,11 +1,21 @@
 <script setup lang="ts">
 import BaseButton from '@/components/BaseButton.vue'
 import BaseCarousel from '@/components/BaseCarousel.vue'
-import BaseInput from '@/components/BaseInput.vue'
 import SectionBlock from '@/layouts/SectionBlock.vue'
+import CartProduct from './components/CartProduct.vue'
 import productList from '@/mocks/product.json'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useWindowSize } from '@vueuse/core'
+import { useCartStore } from '@/stores/cart'
+import { storeToRefs } from 'pinia'
+import type { CartItem } from '@/types/models/cart.types'
+import { useFormat } from '@/composables/useFormat'
+
+const cartStore = useCartStore()
+const {} = cartStore
+const { cartItems, totalPrice } = storeToRefs(cartStore)
+
+const { price, currency } = useFormat()
 
 const newClothSlides = productList.map(product => ({
   image: product.imgs[0].path,
@@ -23,7 +33,43 @@ const productSlidesPerView = computed(() => {
   else return 1
 })
 
-const count = ref('1')
+// 購物車商品假資料
+const mockCartItems: CartItem[] = [
+  {
+    id: 'P0001',
+    name: 'UR TECH DRYLUXE 仿亞麻外套',
+    size: 'FREE',
+    color: 'yellow', // 從 imgs 或 color 裡挑
+    price: 1400,
+    quantity: 2
+  },
+  {
+    id: 'P0002',
+    name: '大口袋設計牛仔褲',
+    size: 'FREE',
+    color: 'brown',
+    price: 1800,
+    quantity: 1
+  },
+  {
+    id: 'P0003',
+    name: '下襬抽繩設計套衫',
+    size: 'FREE',
+    color: 'mint',
+    price: 1250,
+    quantity: 3
+  },
+  {
+    id: 'P0005',
+    name: '輕薄棉紗皺摺襯衫',
+    size: 'FREE',
+    color: 'white',
+    price: 1800,
+    quantity: 1
+  }
+]
+
+cartItems.value = mockCartItems
 </script>
 
 <template>
@@ -54,31 +100,13 @@ const count = ref('1')
       <!-- 購物車區塊 -->
       <div class="cart-section flex flex-col gap-8 w-full max-w-[850px]">
         <!-- 商品列表 -->
-        <div class="product h-full max-h-[300px] md:max-h-[172px] flex gap-4">
-          <img src="./../../assets/images/products/P4167/4167084_white.jpg" alt="" />
+        <CartProduct
+          v-for="item in cartItems"
+          :key="item.id"
+          :product="item"
+          @update-quantity="(val: string) => (item.quantity = Number(val))"
+        ></CartProduct>
 
-          <div class="product-info grid w-full">
-            <div class="product-info__item flex flex-col gap-4">
-              <div class="title">抽繩襯衫搭配束胸背心套裝</div>
-              <ul class="content">
-                <li>商品編號：KBA6-23J140</li>
-                <li>顏色：YELLOW BEG</li>
-                <li>尺寸：S</li>
-              </ul>
-            </div>
-
-            <div class="product-info__price">$1,980</div>
-
-            <div class="product-info__count flex flex-col gap-2 items-end max-w-[80px] ml-auto">
-              <BaseInput v-model="count" type="number"></BaseInput>
-
-              <p class="del">刪除</p>
-            </div>
-          </div>
-
-          <!-- 加條件：最後一個item不需顯示 -->
-          <div v-if="false" class="product-divider"></div>
-        </div>
         <ul class="alert-notice">
           <li>※折扣商品、優惠券、禮品包裝無法退換貨</li>
           <li>※無法包裝的商品不能選擇禮品包裝</li>
@@ -92,7 +120,9 @@ const count = ref('1')
           <p class="text-xs">同意本網站的<a>使用條款</a>後下單</p>
           <BaseButton class="max-w-[240px]">前往結帳</BaseButton>
           <div class="product-divider mt-4"></div>
-          <p class="text-sm">訂單總額：<span class="text-2xl font-bold">$7,425</span></p>
+          <p class="text-sm">
+            訂單總額：<span class="text-2xl font-bold">{{ currency(totalPrice) }}</span>
+          </p>
         </div>
 
         <p class="underline text-sm">繼續購物</p>
@@ -126,6 +156,7 @@ const count = ref('1')
     margin: inherit;
   }
 }
+
 .steps-container {
   background: var(--light-gray);
 }
@@ -168,53 +199,6 @@ const count = ref('1')
   border: 1px solid var(--border-gray);
   padding: 30px;
   border-radius: 2px;
-
-  img {
-    height: 100%;
-  }
-}
-
-.product-divider {
-  width: 100%;
-  border-top: 1px solid var(--border-gray);
-}
-
-.product-info {
-  // grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-
-  @media (width > 1200px) {
-    grid-template-columns: minmax(360px, 1fr) 1fr 1fr;
-  }
-
-  &__item {
-    .title {
-      font-weight: bold;
-    }
-
-    .content {
-      color: var(--secondary-color);
-      font-size: 0.75rem;
-      line-height: 1.4rem;
-    }
-  }
-
-  &__price {
-    font-weight: bold;
-    margin-left: auto;
-    @media (width > 1200px) {
-      margin-left: inherit;
-    }
-  }
-
-  &__count {
-    p.del {
-      text-decoration: underline;
-      font-size: 0.75rem;
-      user-select: none;
-      cursor: pointer;
-    }
-  }
 }
 
 .alert-notice {
