@@ -5,8 +5,12 @@ import productList from '@/mocks/product.json'
 import { computed } from 'vue'
 import { useFormat } from '@/composables/useFormat'
 import type { Product } from '@/types/models/product.types'
+import { useCartStore } from '@/stores/cart'
 
 const { price } = useFormat()
+
+const cartStore = useCartStore()
+const { addItem } = cartStore
 
 const props = withDefaults(defineProps<{ product: Product | null }>(), {
   product: () => productList[4]
@@ -22,6 +26,17 @@ function getDiscountText(rate: number) {
 
 // 是否有特價
 const hasDiscount = computed(() => props.product?.isSale || props.product?.isTimeSale)
+
+function addToCart(product: Product) {
+  const item = {
+    id: product.id,
+    name: product.name,
+    size: product.size,
+    color: product.color,
+    price: product.price
+  }
+  addItem(item)
+}
 </script>
 
 <template>
@@ -36,9 +51,11 @@ const hasDiscount = computed(() => props.product?.isSale || props.product?.isTim
 
     <!-- 第二列：商品資訊 -->
     <div class="item-info flex flex-col md:flex-row gap-8">
-      <div class="img-container">
-        <img :src="product.imgs[0].path" alt="" />
-      </div>
+      <router-link :to="`/product/${product.id}`">
+        <div class="img-container">
+          <img :src="product.imgs[0].path" alt="" />
+        </div>
+      </router-link>
 
       <div class="flex flex-col gap-8">
         <div class="flex flex-col gap-2">
@@ -46,7 +63,9 @@ const hasDiscount = computed(() => props.product?.isSale || props.product?.isTim
           <div v-if="product.isTimeSale" class="badge w-fit">限時特價</div>
           <dl>
             <dt>商品名稱</dt>
-            <dd>{{ product.name }}</dd>
+            <dd>
+              <router-link :to="`/product/${product.id}`">{{ product.name }}</router-link>
+            </dd>
             <dt>商品編號</dt>
             <dd>{{ product.id }}</dd>
             <dt>顏色</dt>
@@ -69,7 +88,10 @@ const hasDiscount = computed(() => props.product?.isSale || props.product?.isTim
           </dl>
         </div>
 
-        <BaseButton>加入購物車</BaseButton>
+        <BaseButton v-if="product.inStock" class="max-w-[180px]" @click="addToCart(product)">
+          加入購物車
+        </BaseButton>
+        <BaseButton v-else class="max-w-[180px]" plain>到貨通知</BaseButton>
       </div>
     </div>
   </div>
@@ -155,6 +177,18 @@ const hasDiscount = computed(() => props.product?.isSale || props.product?.isTim
     height: 100%;
     object-fit: cover;
     object-position: center;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0);
+    transition: background 0.2s ease;
+  }
+
+  &:hover::after {
+    background: rgba(255, 255, 255, 0.2);
   }
 }
 </style>

@@ -2,10 +2,11 @@
 import { computed } from 'vue'
 
 const props = withDefaults(
-  defineProps<{ text?: string; width?: string | number; plain?: boolean }>(),
+  defineProps<{ text?: string; width?: string | number; plain?: boolean; disabled?: boolean }>(),
   {
     text: 'Button',
-    plain: false
+    plain: false,
+    disabled: false
   }
 )
 
@@ -13,7 +14,11 @@ const customWidth = computed(() => props.width + 'px')
 </script>
 
 <template>
-  <div class="button" :style="{ maxWidth: customWidth }" :class="{ 'is-plain': plain }">
+  <div
+    class="button"
+    :style="{ maxWidth: customWidth }"
+    :class="{ 'is-plain': plain, 'is-disabled': disabled }"
+  >
     <p class="button__label">
       <slot>{{ text }}</slot>
     </p>
@@ -54,10 +59,12 @@ const customWidth = computed(() => props.width + 'px')
   border: 1px solid var(--primary-color);
 
   &:hover {
+    opacity: 0.8;
     background-color: var(--primary-color);
   }
 
   &:active {
+    opacity: 0.8;
     background-color: var(--primary-active);
   }
 
@@ -68,6 +75,27 @@ const customWidth = computed(() => props.width + 'px')
 
   .button__label {
     color: var(--primary-color);
+  }
+}
+
+.button.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: var(--white);
+  border-color: var(--secondary-hover);
+
+  &:hover,
+  &:active {
+    background-color: var(--white);
+    color: var(--secondary-active);
+  }
+
+  .button__label {
+    color: var(--secondary-active);
+  }
+
+  &:hover .button__label {
+    color: var(--secondary-active);
   }
 }
 </style>
