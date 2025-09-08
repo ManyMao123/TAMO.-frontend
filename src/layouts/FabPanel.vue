@@ -4,6 +4,8 @@ import { Icon } from '@iconify/vue'
 import { useElementHover, useTimeoutFn, useMediaQuery } from '@vueuse/core'
 import { useUIStore } from '@/stores/ui'
 import { useRouter } from 'vue-router'
+import { useCartStore } from '@/stores/cart'
+import { storeToRefs } from 'pinia'
 
 withDefaults(defineProps<{ text?: string }>(), { text: 'Button' })
 
@@ -35,6 +37,9 @@ const fabPanelList: fabPanelItem[] = [
   { icon: 'search', text: '搜尋', action: () => openSidebar('search') },
   { icon: 'bars', text: '菜單', action: () => openSidebar('menu') }
 ]
+
+const cartStore = useCartStore()
+const { totalQuantity } = storeToRefs(cartStore)
 
 const buttonRef = ref<HTMLElement | null>(null)
 const listRef = ref<HTMLElement | null>(null)
@@ -89,6 +94,9 @@ watch(
         :key="index"
         @click="item.action"
       >
+        <div v-if="item.icon === 'cart' && totalQuantity" class="cart-badge">
+          {{ totalQuantity }}
+        </div>
         <Icon :icon="`flowbite:${item.icon}-outline`" width="36" height="36" />
         <span>{{ item.text }}</span>
       </li>
@@ -129,13 +137,13 @@ watch(
   border-radius: 2rem 2rem 0 0;
   width: 86px;
   padding-block: 16px 50px;
-  overflow: hidden;
   background-color: rgba(184, 154, 115, 0.5);
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   transform-origin: bottom;
   transform: scaleY(0);
   transition: transform 0.3s ease-out;
+  overflow: visible;
 
   &.is-open {
     transform: scaleY(1);
@@ -163,6 +171,7 @@ watch(
   user-select: none;
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
   transition: transform 0.3s ease;
+  position: relative;
 
   @media (min-width: 768px) {
     height: 85px;
@@ -210,6 +219,25 @@ watch(
 
   &.is-open svg {
     transform: rotate(45deg);
+  }
+}
+
+// 購物車總數量顯示
+.cart-badge {
+  position: absolute;
+  left: 50px;
+  top: -6px;
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  border-radius: 50%;
+  padding: 4px;
+  background: var(--accent-color);
+  font-size: 0.75rem;
+  transition: all 0.3s ease;
+
+  @media (width > 768px) {
+    left: 62px;
   }
 }
 </style>
