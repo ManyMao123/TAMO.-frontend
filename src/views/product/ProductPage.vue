@@ -63,14 +63,14 @@ function showNextImage() {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 mx-auto max-w-[1300px]">
+  <div class="flex flex-col gap-8 mx-auto w-full max-w-[1300px] px-4">
     <!-- 麵包屑 -->
     <BaseBreadCrumb :breadcrumbs="breadcrumbs"></BaseBreadCrumb>
 
-    <div class="grid grid-cols-2 gap-20">
-      <div class="flex flex-col gap-10">
-        <div class="product-pic">
-          <div class="img-previewer">
+    <div class="product-container flex flex-col">
+      <div class="item-container flex flex-col md:flex-row gap-8 lg:gap-18">
+        <div class="product-pic w-full">
+          <div class="img-previewer w-full">
             <div class="img-previewer__pagination">
               <span>{{ currentImgIndex + 1 }}</span>
               <span>/</span>
@@ -101,22 +101,23 @@ function showNextImage() {
           </div>
 
           <!-- 商品細節照片-->
-          <div class="h-[66px] flex gap-2">
-            <img
+          <div class="flex gap-2">
+            <div
               v-for="(item, index) in productMocks[currentTypeIndex].img"
+              class="w-[56px] h-[66px]"
               :key="index"
-              :src="item"
-              :class="{ 'is-selected': currentImgIndex === index }"
-              @click="selectImg(index)"
-              alt=""
-            />
+            >
+              <img
+                :src="item"
+                :class="{ 'is-selected': currentImgIndex === index }"
+                @click="selectImg(index)"
+                alt=""
+              />
+            </div>
           </div>
         </div>
-        <!-- 店員實穿分享 -->
-        <StaffStyling />
-      </div>
 
-      <div class="flex flex-col gap-10">
+        <!-- 商品資訊(文字) -->
         <div class="flex flex-col gap-10 justify-between">
           <div class="product-info">
             <div>
@@ -147,8 +148,13 @@ function showNextImage() {
             </div>
           </div>
         </div>
-        <!-- 商品資訊(文字) -->
-        <div>
+      </div>
+      <div class="item-container flex flex-col md:flex-row gap-8 lg:gap-18 mt-20">
+        <!-- 店員實穿分享 -->
+        <StaffStyling />
+
+        <!-- 商品尺寸及使用說明-->
+        <div class="w-full">
           <BaseCollapse :title="'商品說明'" :preview="true">
             <p>
               カジュアルコーデに華を添えるトップス
@@ -215,8 +221,13 @@ function showNextImage() {
 </template>
 
 <style scoped lang="scss">
+:deep(.item-container > div) {
+  flex: 1 1 50%;
+}
+
 img {
   height: 100%;
+  width: 100%;
 }
 
 .product-pic {
