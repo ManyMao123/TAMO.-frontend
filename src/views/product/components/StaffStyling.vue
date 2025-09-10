@@ -15,7 +15,7 @@ const activeTab = ref<'latest' | 'popular'>('latest')
 </script>
 
 <template>
-  <div class="staff-styling-section max-h-[810px] flex flex-col gap-4">
+  <div class="staff-styling-section h-full max-h-[810px] flex flex-col gap-4">
     <!-- 標題-->
     <h2 class="text-center font-bold">店員實穿</h2>
     <!-- Tabs 頁籤 -->
@@ -28,8 +28,8 @@ const activeTab = ref<'latest' | 'popular'>('latest')
       </div>
     </div>
     <!-- Tabs 內容 -->
-    <div class="tabs-content">
-      <div class="tab-panel" id="latest" :class="{ hidden: activeTab !== 'latest' }">
+    <div class="tabs-content w-full mx-auto">
+      <div class="tab-panel w-full" id="latest" :class="{ hidden: activeTab !== 'latest' }">
         <BaseCarousel
           :slides="newClothSlides"
           :slides-per-view="3"
@@ -65,6 +65,14 @@ h2 {
 .staff-styling-section {
   background-color: #f4f4f4;
   padding: 2.5rem;
+  width: 100%;
+
+  @media (width > 768px) {
+    width: calc(50% - 32px);
+  }
+  @media (width > 1280px) {
+    width: calc(50% - 72px);
+  }
 }
 
 .tabs-header {
